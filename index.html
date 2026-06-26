@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1970년대 레트로 민트 두벌식 타자기</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&family=Nanum+Myeongjo:wght@700;800&family=Song+Myung&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Song Myung', 'Nanum Myeongjo', serif;
+            background-color: #171c1a;
+            background-image: radial-gradient(rgba(0, 0, 0, 0.45) 1px, transparent 0),
+                              radial-gradient(rgba(0, 0, 0, 0.45) 1px, transparent 0);
+            background-size: 8px 8px;
+            background-position: 0 0, 4px 4px;
+        }
+        /* 1970s Streamlined Mint/Sage Green Painted Chassis */
+        .typewriter-body {
+            background: linear-gradient(135deg, #a7e0d3 0%, #6abda9 50%, #449784 100%);
+            box-shadow: inset 0 3px 6px rgba(255,255,255,0.45), 
+                        0 20px 45px rgba(0,0,0,0.85),
+                        0 2px 12px rgba(68, 151, 132, 0.5);
+            border: 4px solid #5caea1;
+        }
+        /* Elegant 1970s Square-Rounded Molded Plastic Keycaps - Deep Forest/Teal Tone */
+        .vintage-key {
+            background: radial-gradient(circle at 35% 35%, #2a5048 0%, #132c26 100%);
+            border: 1px solid #0f2420;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.2),
+                        0 3px 0 #091714, 
+                        0 5px 8px rgba(0,0,0,0.55);
+            transition: all 0.05s ease;
+            color: #e6f4f1;
+            text-shadow: 0 -1px 0 rgba(0,0,0,0.9);
+            border-radius: 6px; /* Sleek 70s rounded square shape */
+        }
+        .vintage-key:active, .vintage-key.pressed {
+            transform: translateY(3px);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.7),
+                        0 0px 0 #091714, 
+                        0 2px 3px rgba(0,0,0,0.55);
+            background: radial-gradient(circle at center, #132c26 0%, #091714 100%);
+        }
+        /* Vibrant Crimson Red Accents for Special Keys */
+        .vintage-key-red {
+            background: radial-gradient(circle at 35% 35%, #d13030 0%, #7c1212 100%) !important;
+            border-color: #9c2828 !important;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.35),
+                        0 3px 0 #4a0909, 
+                        0 5px 8px rgba(0,0,0,0.55) !important;
+            color: #ffffff !important;
+        }
+        .vintage-key-red:active, .vintage-key-red.pressed {
+            transform: translateY(3px);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.7),
+                        0 0px 0 #4a0909, 
+                        0 2px 3px rgba(0,0,0,0.55) !important;
+            background: radial-gradient(circle at center, #931717 0%, #540b0b 100%) !important;
+        }
+        /* Metal Carriage slide mechanics */
+        .carriage-transition {
+            transition: transform 0.12s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        /* Strike bar animation */
+        @keyframes strike {
+            0% { transform: translate(-50%, 100%) scaleY(0.1); opacity: 0.2; }
+            50% { transform: translate(-50%, -8px) scaleY(1.1); opacity: 1; }
+            100% { transform: translate(-50%, 100%) scaleY(0.1); opacity: 0; }
+        }
+        .typebar-striking {
+            animation: strike 0.08s ease-out;
+        }
+        /* Beautiful Toast Message Container */
+        #custom-toast {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(20px);
+        }
+        #custom-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-stone-200 overflow-x-hidden flex flex-col justify-between select-none">
+
+    <!-- Toast Notification (Replaces Browser Alerts) -->
+    <div id="custom-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-stone-900 border border-emerald-600 text-emerald-400 px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 z-50 opacity-0 pointer-events-none font-sans text-sm">
+        <span class="text-base" id="toast-icon">✨</span>
+        <span id="toast-text">알림 메시지</span>
+    </div>
+
+    <!-- Header Block -->
+    <header class="w-full bg-stone-900/95 border-b border-stone-800 p-4 shadow-md backdrop-blur flex justify-between items-center z-50">
+        <div class="flex items-center space-x-3">
+            <span class="text-3xl">🍵</span>
+            <div>
+                <h1 class="text-xl md:text-2xl font-bold text-teal-400 tracking-wider">1970년대 레트로 민트 두벌식 타자기</h1>
+                <p class="text-xs text-stone-400 font-sans">Vintage Mint Steel-Style 2-Set Hangul Typewriter (Classic Edition)</p>
+            </div>
+        </div>
+        <div class="flex space-x-3">
+            <button id="btn-manual" class="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-300 rounded border border-stone-700 text-sm transition font-sans">
+                📖 사용 설명서
+            </button>
+            <button id="btn-sound-toggle" class="px-3 py-1.5 bg-teal-600/30 hover:bg-teal-600/50 text-teal-300 rounded border border-teal-600/50 text-sm transition font-sans">
+                🔊 소리 켬
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center justify-center p-4 gap-6 max-w-6xl w-full mx-auto">
+        
+        <!-- Controls & Jam Meter -->
+        <div class="w-full flex flex-wrap justify-between items-center gap-3 bg-stone-900/70 p-3 rounded-lg border border-stone-800 backdrop-blur">
+            <div class="flex items-center space-x-4">
+                <div class="flex flex-col">
+                    <span class="text-xs text-stone-400 font-sans mb-1">잉크 리본 색상</span>
+                    <div class="flex items-center space-x-2 bg-stone-950 p-1 rounded border border-stone-800">
+                        <button id="ribbon-black" class="w-6 h-6 rounded-full bg-stone-900 border-2 border-teal-500 cursor-pointer transition transform scale-110" title="검정 리본"></button>
+                        <button id="ribbon-red" class="w-6 h-6 rounded-full bg-red-700 border border-stone-700 cursor-pointer transition hover:scale-110" title="빨강 리본"></button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col">
+                    <span class="text-xs text-stone-400 font-sans mb-1">인쇄 모드</span>
+                    <div class="px-3 py-1 bg-stone-950 rounded text-teal-400 border border-stone-800 text-xs font-bold h-[30px] flex items-center">
+                        🖨️ 두벌식 겹침인쇄 모드
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jam Meter -->
+            <div class="flex items-center space-x-3 bg-stone-950 px-4 py-2 rounded-lg border border-stone-800">
+                <div class="flex flex-col">
+                    <span class="text-[10px] text-stone-400 font-sans uppercase tracking-widest">활판 엉킴 한계치</span>
+                    <div class="w-28 bg-stone-800 h-2 rounded overflow-hidden mt-1">
+                        <div id="jam-bar" class="bg-teal-500 h-full w-0 transition-all duration-100"></div>
+                    </div>
+                </div>
+                <button id="btn-unjam" class="px-2.5 py-1 text-xs font-bold bg-teal-700/30 hover:bg-teal-700/60 border border-teal-600/40 text-teal-400 rounded cursor-pointer animate-pulse font-sans">
+                    ⚙️ 활판 정돈
+                </button>
+            </div>
+
+            <!-- Paper Actions -->
+            <div class="flex items-center space-x-2">
+                <button id="btn-load-paper" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-600 text-stone-100 rounded font-bold shadow border border-emerald-600 text-sm transition">
+                    📄 새 종이 넣기
+                </button>
+                <button id="btn-rip-paper" class="px-4 py-2 bg-red-950 hover:bg-red-900 text-red-200 rounded font-bold shadow border border-red-900 text-sm transition">
+                    ✂️ 종이 뜯어내기
+                </button>
+            </div>
+        </div>
+
+        <!-- TYPEWRITER CHASSIS -->
+        <div class="w-full max-w-4xl typewriter-body rounded-2xl p-6 flex flex-col items-center gap-6 relative overflow-hidden">
+            
+            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+
+            <!-- 1. CARRIAGE ASSEMBLY (Sleek 1970s streamlined styling) -->
+            <div class="w-full bg-stone-900 rounded-xl p-3 border-b-4 border-stone-950 relative shadow-2xl flex flex-col items-center overflow-hidden h-[420px]">
+                
+                <!-- Shiny Metal Carriage Rails -->
+                <div class="absolute left-0 right-0 top-1/2 h-4 bg-gradient-to-b from-stone-400 via-stone-200 to-stone-500 border-y border-stone-600 z-0"></div>
+
+                <!-- CARRIAGE CONTAINER -->
+                <div id="carriage" class="absolute h-full w-[800px] z-10 carriage-transition flex flex-col justify-center items-center" style="transform: translateX(0px);">
+                    
+                    <!-- Carriage Return Lever (Retro polished look) -->
+                    <div id="return-lever" class="absolute left-10 top-1/3 w-4 h-24 bg-gradient-to-r from-stone-300 via-stone-100 to-stone-400 rounded-lg cursor-pointer transform origin-bottom border border-stone-500 shadow-md hover:brightness-110 active:rotate-12 transition-transform duration-100 z-30" title="줄 바꿈 레버 (Enter)">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-4 bg-stone-200 rounded-full border border-stone-400"></div>
+                        <span class="absolute -top-6 -left-3 text-[10px] text-stone-400 font-sans rotate-12 font-bold">줄 바꿈</span>
+                    </div>
+
+                    <!-- Left Platen Knob (Chic 70s Cream Beige Accent) -->
+                    <div id="knob-left" class="absolute -left-6 top-1/2 -translate-y-1/2 w-8 h-12 bg-gradient-to-r from-stone-200 to-stone-300 rounded border-y border-stone-400 cursor-ns-resize shadow-lg flex flex-col justify-between p-1 z-30" title="종이 스크롤">
+                        <div class="h-0.5 bg-stone-400 w-full"></div>
+                        <div class="h-0.5 bg-stone-400 w-full"></div>
+                        <div class="h-0.5 bg-stone-400 w-full"></div>
+                    </div>
+
+                    <!-- Right Platen Knob (Chic 70s Cream Beige Accent) -->
+                    <div id="knob-right" class="absolute -right-6 top-1/2 -translate-y-1/2 w-8 h-12 bg-gradient-to-l from-stone-200 to-stone-300 rounded border-y border-stone-400 cursor-ns-resize shadow-lg flex flex-col justify-between p-1 z-30" title="종이 스크롤">
+                        <div class="h-0.5 bg-stone-400 w-full"></div>
+                        <div class="h-0.5 bg-stone-400 w-full"></div>
+                        <div class="h-0.5 bg-stone-400 w-full"></div>
+                    </div>
+
+                    <!-- THE PLATEN ROLLER -->
+                    <div class="w-[520px] h-[340px] bg-stone-950 rounded-lg border-2 border-stone-800 relative shadow-inner overflow-hidden flex justify-center items-center">
+                        <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-20 bg-stone-900/60 border-y border-stone-800 pointer-events-none z-0"></div>
+
+                        <!-- PAPER CONTAINER -->
+                        <div id="paper-container" class="absolute w-[440px] h-[600px] bg-[#fdfaf2] shadow-2xl transition-all duration-300 transform rounded border border-stone-300/50 z-10 flex flex-col overflow-hidden" style="transform: translateY(120px); opacity: 0;">
+                            <!-- Premium Linen Paper Grain -->
+                            <div class="absolute inset-0 bg-[radial-gradient(#ebd9c0_1px,transparent_0)] bg-[length:5px_5px] opacity-20 pointer-events-none"></div>
+                            
+                            <!-- Virtual Sheet Content Canvas -->
+                            <canvas id="paper-canvas" class="w-full h-full block z-10 cursor-text"></canvas>
+                            <div class="absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-black/10 to-transparent pointer-events-none"></div>
+                        </div>
+
+                        <!-- Paper Feed Guide Bars -->
+                        <div class="absolute left-6 right-6 top-[135px] h-1 bg-gradient-to-b from-stone-300 to-stone-500 border border-stone-400 rounded-full z-20 opacity-90 shadow"></div>
+                        <div class="absolute left-10 right-10 top-[180px] h-2 bg-stone-800/80 border-t border-stone-900 rounded-full z-20 pointer-events-none"></div>
+                    </div>
+
+                    <!-- Carriage Scale -->
+                    <div class="w-[520px] h-5 bg-gradient-to-b from-stone-800 to-stone-950 border border-stone-900 rounded-b flex justify-between px-6 text-[8px] text-stone-500 font-mono tracking-widest z-20">
+                        <span>|...0...|...10...|...20...|...30...|...40...|...50...|...60...|</span>
+                    </div>
+                </div>
+
+                <!-- FRONT STATIC ELEMENTS -->
+                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-48 h-28 z-30 pointer-events-none flex flex-col justify-between items-center">
+                    <div id="no-paper-alert" class="px-3 py-1 bg-red-600 text-stone-100 text-xs font-sans font-bold rounded-lg shadow-lg animate-bounce transition-opacity">
+                        종이가 장착되지 않았습니다
+                    </div>
+
+                    <div id="jam-alert" class="px-3 py-1 bg-amber-600 text-stone-100 text-xs font-sans font-bold rounded-lg shadow-lg hidden animate-pulse">
+                        ⚠️ 활판 엉킴! 정돈이 필요합니다
+                    </div>
+
+                    <!-- Metal ribbon guide -->
+                    <div class="relative w-20 h-16 flex justify-center">
+                        <div class="absolute left-0 bottom-0 w-2 h-12 bg-gradient-to-t from-stone-700 to-stone-500 rounded"></div>
+                        <div class="absolute right-0 bottom-0 w-2 h-12 bg-gradient-to-t from-stone-700 to-stone-500 rounded"></div>
+                        <div id="ribbon-strip" class="absolute bottom-3 left-1 right-1 h-3 bg-stone-950 border-y border-stone-900 transition-all duration-300"></div>
+                        
+                        <!-- Physical Typebar Strike Lever -->
+                        <div id="typebar" class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-16 bg-gradient-to-t from-stone-600 to-stone-300 origin-bottom transform scale-y-0 opacity-0 z-40"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. INTERNAL CHASSIS & MECHANICS -->
+            <div class="w-full flex justify-between items-center px-12 bg-stone-950/60 py-2 rounded-xl border border-stone-900/80">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xs text-stone-500 font-sans">리본 축 L</span>
+                    <div class="relative w-12 h-12 bg-stone-900 rounded-full border border-stone-800 shadow-inner flex items-center justify-center">
+                        <div id="spool-l" class="w-10 h-10 rounded-full bg-gradient-to-br from-stone-800 to-black border-2 border-stone-700 flex items-center justify-center transition-transform duration-100">
+                            <div class="w-4 h-4 rounded-full bg-stone-900 border border-stone-600"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brand Plaque -->
+                <div class="text-center">
+                    <div class="text-teal-300 font-extrabold tracking-[0.25em] text-sm md:text-base font-serif uppercase">二部式 打字機</div>
+                    <div class="text-[9px] text-stone-500 tracking-wider font-sans">1970s Mint Portable Retro Edition</div>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    <div class="relative w-12 h-12 bg-stone-900 rounded-full border border-stone-800 shadow-inner flex items-center justify-center">
+                        <div id="spool-r" class="w-10 h-10 rounded-full bg-gradient-to-bl from-stone-800 to-black border-2 border-stone-700 flex items-center justify-center transition-transform duration-100">
+                            <div class="w-4 h-4 rounded-full bg-stone-900 border border-stone-600"></div>
+                        </div>
+                    </div>
+                    <span class="text-xs text-stone-500 font-sans">리본 축 R</span>
+                </div>
+            </div>
+
+            <!-- 3. KEYBOARD PANEL -->
+            <div class="w-full flex flex-col gap-2 bg-stone-950/80 p-4 rounded-xl border border-stone-900/50 shadow-inner">
+                
+                <!-- Utility row -->
+                <div class="flex justify-between items-center mb-1 px-1">
+                    <div class="flex space-x-2">
+                        <button id="btn-backspace" class="px-4 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-300 rounded border border-stone-700 text-xs font-bold font-sans flex items-center gap-1">
+                            ⬅️ 백스페이스 (Backspace)
+                        </button>
+                        <button id="btn-correction" class="px-4 py-1.5 bg-stone-200 hover:bg-stone-100 text-stone-900 rounded border border-stone-300 text-xs font-bold font-sans flex items-center gap-1 shadow-md">
+                            💧 수정액 바르기 (White-out)
+                        </button>
+                        <button id="btn-latch-batchim" class="px-4 py-1.5 bg-stone-800 hover:bg-stone-700 text-teal-400 rounded border border-stone-700 text-xs font-bold font-sans flex items-center gap-1">
+                            ⬇️ 받침 키 상태: <span id="batchim-status" class="text-red-500 font-bold">해제</span>
+                        </button>
+                    </div>
+                    <div class="text-[11px] text-stone-400 bg-stone-900/80 px-2 py-1 rounded font-sans">
+                        💡 PC 키보드 자판으로 한글 입력 시 자동으로 아름답게 조합 및 배치됩니다.
+                    </div>
+                </div>
+
+                <!-- Virtual Keys Grid (Based exactly on Webp) -->
+                <div id="virtual-keyboard" class="flex flex-col gap-2">
+                    <!-- Dynamic keys rendered from JavaScript to match photo precisely -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Explainer -->
+    <footer class="w-full bg-stone-950 py-4 px-6 border-t border-stone-900 text-center text-xs text-stone-500 font-sans">
+        <p>© 1970 기계식 두벌식 타자기 시뮬레이터. 실제 타자기 고유의 받침 메커니즘을 복원하였습니다.</p>
+    </footer>
+
+    <!-- MODAL: HELP & MANUAL -->
+    <div id="modal-manual" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 hidden backdrop-blur-sm">
+        <div class="bg-stone-900 border-2 border-stone-700 rounded-xl p-6 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl relative font-sans text-stone-300">
+            <button id="btn-manual-close" class="absolute top-4 right-4 text-stone-400 hover:text-stone-100 text-xl font-bold">×</button>
+            
+            <h3 class="text-xl font-bold text-teal-400 mb-4 border-b border-stone-800 pb-2 flex items-center gap-2">
+                📖 1970년대 두벌식 타자기 가이드
+            </h3>
+            
+            <div class="space-y-4 text-sm leading-relaxed">
+                <div>
+                    <h4 class="font-bold text-stone-100 mb-1">1. 종이 급지 (Paper Feed)</h4>
+                    <p class="text-stone-300">우측 상단의 <span class="text-emerald-400 font-bold">"새 종이 넣기"</span> 버튼을 눌러야 종이가 장착되어 타이핑이 시작됩니다. 종이가 없는 상태에서는 활판이 맨 쇠에 직접 닿는 둔탁한 타격음이 나며 찍히지 않습니다. 마우스 휠 또는 양옆의 조절 다이얼(노브)을 드래그하여 위아래로 종이를 조절할 수 있습니다.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-stone-100 mb-1">2. 두벌식 겹침 인쇄 공법</h4>
+                    <p class="text-stone-300">컴퓨터 조판 시스템과 달리, 과거의 기계식 2벌식 타자기는 사용자가 글쇠를 누르는 즉시 하나의 쇠팔(Typebar)이 올라와 종이 위에 포개어 찍는 방식으로 동작했습니다. 따라서 글씨가 찍힐 때 자모가 완벽하게 결합하지 않고 약간 어긋나거나 흔들리는 독특한 빈티지 폰트 질감이 자연스럽게 완성됩니다.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-stone-100 mb-1">3. 받침 키 (Shift)</h4>
+                    <p class="text-stone-300">자음 중 받침용으로 쓰이는 글자들은 화면의 **`받침`** 키를 클릭하여 활성화하거나, PC 키보드의 **Shift 키**를 누른 채 입력하시면 쇠팔이 약간 아래쪽으로 이동하여 정상적인 '받침' 위치에 글씨를 스탬핑합니다.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-stone-100 mb-1">4. 수정액 (White-out)</h4>
+                    <p class="text-stone-300">기계식 타자기는 글자를 컴퓨터처럼 지울 수 없습니다. 오타가 났다면 백스페이스로 해당 지점으로 간 다음, **`수정액 바르기`**를 클릭하여 하얗게 지우고 그 자리에 다시 찍는 진짜 아날로그식 오타 교정을 해보세요!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: PAPER PREVIEW -->
+    <div id="modal-rip" class="fixed inset-0 bg-black/95 flex items-center justify-center p-4 z-50 hidden backdrop-blur-sm">
+        <div class="bg-stone-900 border-2 border-stone-700 rounded-xl p-6 max-w-xl w-full flex flex-col items-center shadow-2xl relative font-sans text-stone-300">
+            <button id="btn-rip-close" class="absolute top-4 right-4 text-stone-400 hover:text-stone-100 text-xl font-bold">×</button>
+            
+            <h3 class="text-xl font-bold text-teal-400 mb-2 flex items-center gap-2">
+                ✂️ 타자기에서 찢어낸 고운 편지
+            </h3>
+            <p class="text-xs text-stone-400 mb-4 text-center">작성하신 아날로그 타자 문서가 한 장의 아름다운 인쇄지로 탄생했습니다.</p>
+
+            <div class="w-full bg-stone-950 p-4 rounded-lg flex justify-center mb-5 border border-stone-800 max-h-[350px] overflow-y-auto">
+                <img id="rip-image-preview" class="max-w-xs shadow-2xl border border-stone-700 rounded bg-[#fdfaf2] h-auto" alt="타자 이미지 프리뷰" />
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-3 w-full">
+                <a id="download-link" href="#" class="px-5 py-2.5 bg-teal-600 hover:bg-teal-500 text-stone-900 font-bold rounded transition flex items-center gap-2 shadow-lg">
+                    💾 인쇄물 다운로드 (PNG)
+                </a>
+                <button id="btn-copy-text" class="px-5 py-2.5 bg-stone-700 hover:bg-stone-600 text-stone-100 rounded font-bold transition flex items-center gap-2 border border-stone-600">
+                    📋 일반 텍스트로 전체 복사
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <textarea id="hidden-input" class="absolute opacity-0 pointer-events-none -left-[9999px]" tabindex="-1"></textarea>
+
+    <script>
+        // --- 1. DETAILED RETRO TWO-SET TYPEWRITER LAYOUT SPECIFICATION ---
+        // Exactly mapped key structures matching the uploaded image '1782433203996.webp'
+        const VISUAL_KEYBOARD = [
+            // Row 1
+            [
+                { primary: "1", shift: "!", type: "normal" },
+                { primary: "2", shift: "\"", type: "normal" },
+                { primary: "3", shift: "₩", type: "normal" },
+                { primary: "4", shift: "$", type: "normal" },
+                { primary: "5", shift: "%", type: "normal" },
+                { primary: "6", shift: "/", type: "normal" },
+                { primary: "7", shift: ":", type: "normal" },
+                { primary: "8", shift: "(", type: "normal" },
+                { primary: "9", shift: ")", type: "normal" },
+                { primary: "0", shift: "-", type: "normal" },
+                { primary: "ㄲ", shift: "*", type: "normal" },
+                { primary: "ㄻ", shift: "+", type: "normal" }
+            ],
+            // Row 2
+            [
+                { primary: "⇹", shift: "⇹", type: "normal" }, // Margin Release
+                { primary: "ㅂ", shift: "ㅃ", type: "normal" },
+                { primary: "ㅈ", shift: "ㅉ", type: "normal" },
+                { primary: "ㄷ", shift: "ㄸ", type: "normal" },
+                { primary: "ㄱ", shift: "ㄲ", type: "normal" },
+                { primary: "ㅅ", shift: "ㅆ", type: "normal" },
+                { primary: "ㅛ", shift: "ㅛ", type: "normal" },
+                { primary: "ㅕ", shift: "ㅕ", type: "normal" },
+                { primary: "ㅑ", shift: "ㅑ", type: "normal" },
+                { primary: "ㅐ", shift: "ㅒ", type: "normal" },
+                { primary: "ㅔ", shift: "ㅖ", type: "normal" },
+                { primary: "ㄺ", shift: "?", type: "normal" },
+                { primary: "⟵", shift: "⟵", type: "special" } // Backspace
+            ],
+            // Row 3
+            [
+                { primary: "🔒", shift: "🔒", type: "special" }, // Shift Lock
+                { primary: "ㅁ", shift: "ㅁ", type: "normal" },
+                { primary: "ㄴ", shift: "ㄴ", type: "normal" },
+                { primary: "ㅇ", shift: "ㅇ", type: "normal" },
+                { primary: "ㄹ", shift: "ㄹ", type: "normal" },
+                { primary: "ㅎ", shift: "ㅎ", type: "normal" },
+                { primary: "ㅗ", shift: "ㅗ", type: "normal" },
+                { primary: "ㅓ", shift: "ㅓ", type: "normal" },
+                { primary: "ㅏ", shift: "ㅏ", type: "normal" },
+                { primary: "ㅣ", shift: "ㅣ", type: "normal" },
+                { primary: "ㄶ", shift: ";", type: "normal" },
+                { primary: "ㅆ", shift: "\"", type: "normal" },
+                { primary: "TAB", shift: "TAB", type: "red-tab" } // Red TAB Key
+            ],
+            // Row 4
+            [
+                { primary: "받침", shift: "받침", type: "shift" }, // Left Shift
+                { primary: "ㅋ", shift: "ㅋ", type: "normal" },
+                { primary: "ㅌ", shift: "ㅌ", type: "normal" },
+                { primary: "ㅊ", shift: "ㅊ", type: "normal" },
+                { primary: "ㅍ", shift: "ㅍ", type: "normal" },
+                { primary: "ㅠ", shift: "ㅠ", type: "normal" },
+                { primary: "ㅜ", shift: "ㅜ", type: "normal" },
+                { primary: "ㅡ", shift: "ㅡ", type: "normal" },
+                { primary: "ㅄ", shift: ",", type: "normal" },
+                { primary: "·", shift: "ㅡ", type: "normal" },
+                { primary: "?", shift: ".", type: "normal" },
+                { primary: "받침", shift: "받침", type: "shift" } // Right Shift
+            ]
+        ];
+
+        // --- HANGUL DECOMPOSITION ALGORITHM ---
+        const CHO_LIST = ["ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
+        const JUNG_LIST = ["ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ", "ㅗ", "ㅘ", "ㅙ", "ㅚ", "ㅛ", "ㅜ", "ㅝ", "ㅞ", "ㅟ", "ㅠ", "ㅡ", "ㅢ", "ㅣ"];
+        const JONG_LIST = ["", "ㄱ", "ㄲ", "ㄳ", "ㄴ", "ㄵ", "ㄶ", "ㄷ", "ㄹ", "ㄺ", "ㄻ", "ㄼ", "ㄽ", "ㄾ", "ㄿ", "ㅀ", "ㅁ", "ㅂ", "ㅄ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
+
+        function decomposeSyllable(char) {
+            const code = char.charCodeAt(0) - 0xAC00;
+            if (code < 0 || code > 11171) return [char]; // Non-hangul fallback
+
+            const jongIdx = code % 28;
+            const jungIdx = Math.floor((code % 588) / 28);
+            const choIdx = Math.floor(code / 588);
+
+            return [
+                CHO_LIST[choIdx],
+                JUNG_LIST[jungIdx],
+                JONG_LIST[jongIdx]
+            ].filter(Boolean);
+        }
+
+        // --- CUSTOM TOAST SYSTEM ---
+        function showToast(text, icon = "✨") {
+            const toast = document.getElementById('custom-toast');
+            const toastText = document.getElementById('toast-text');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastText.textContent = text;
+            toastIcon.textContent = icon;
+
+            toast.classList.add('show');
+            toast.style.pointerEvents = 'auto';
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.style.pointerEvents = 'none';
+            }, 3000);
+        }
+
+        // --- AUDIO ENGINE ---
+        let audioCtx = null;
+        let isSoundEnabled = true;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function createNoiseBuffer(duration = 0.08) {
+            const bufferSize = audioCtx.sampleRate * duration;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+            return buffer;
+        }
+
+        function playTypewriterClack(isSpace = false) {
+            if (!isSoundEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = createNoiseBuffer(isSpace ? 0.07 : 0.05);
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(isSpace ? 600 : 1200, now);
+            filter.Q.setValueAtTime(isSpace ? 1.5 : 3.5, now);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(isSpace ? 0.25 : 0.5, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + (isSpace ? 0.06 : 0.04));
+
+            const osc = audioCtx.createOscillator();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(isSpace ? 150 : 550, now);
+            
+            const oscGain = audioCtx.createGain();
+            oscGain.gain.setValueAtTime(isSpace ? 0.07 : 0.1, now);
+            oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.connect(oscGain);
+            oscGain.connect(audioCtx.destination);
+
+            noise.start(now);
+            noise.stop(now + 0.08);
+            osc.start(now);
+            osc.stop(now + 0.05);
+        }
+
+        function playMetalStrike() {
+            if (!isSoundEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+
+            const osc = audioCtx.createOscillator();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(320, now);
+            osc.frequency.exponentialRampToValueAtTime(60, now + 0.1);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(now);
+            osc.stop(now + 0.1);
+        }
+
+        function playBellRing() {
+            if (!isSoundEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+
+            const osc1 = audioCtx.createOscillator();
+            osc1.type = 'sine';
+            osc1.frequency.setValueAtTime(2600, now);
+
+            const osc2 = audioCtx.createOscillator();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(5200, now);
+
+            const gain1 = audioCtx.createGain();
+            gain1.gain.setValueAtTime(0.15, now);
+            gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+
+            const gain2 = audioCtx.createGain();
+            gain2.gain.setValueAtTime(0.06, now);
+            gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+
+            osc1.connect(gain1);
+            gain1.connect(audioCtx.destination);
+            
+            osc2.connect(gain2);
+            gain2.connect(audioCtx.destination);
+
+            osc1.start(now);
+            osc2.start(now);
+            osc1.stop(now + 0.65);
+            osc2.stop(now + 0.3);
+        }
+
+        function playReturnSlide() {
+            if (!isSoundEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+            const duration = 0.4;
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = createNoiseBuffer(duration);
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(900, now);
+            filter.frequency.exponentialRampToValueAtTime(250, now + duration);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+            for (let i = 0; i < 5; i++) {
+                const clickTime = now + (i * 0.08);
+                const click = audioCtx.createOscillator();
+                click.type = 'triangle';
+                click.frequency.setValueAtTime(200, clickTime);
+                const clickGain = audioCtx.createGain();
+                clickGain.gain.setValueAtTime(0.1, clickTime);
+                clickGain.gain.exponentialRampToValueAtTime(0.001, clickTime + 0.02);
+                click.connect(clickGain);
+                clickGain.connect(audioCtx.destination);
+                click.start(clickTime);
+                click.stop(clickTime + 0.02);
+            }
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            noise.start(now);
+            noise.stop(now + duration);
+        }
+
+        function playPaperScroll() {
+            if (!isSoundEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = createNoiseBuffer(0.2);
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(800, now);
+            filter.Q.setValueAtTime(2, now);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.12, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            noise.start(now);
+            noise.stop(now + 0.2);
+        }
+
+        function playPaperRip() {
+            if (!isSoundEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+            const duration = 0.45;
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = createNoiseBuffer(duration);
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(1100, now);
+            filter.frequency.exponentialRampToValueAtTime(350, now + duration);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.35, now);
+            gain.gain.linearRampToValueAtTime(0.08, now + 0.15);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            noise.start(now);
+            noise.stop(now + duration);
+        }
+
+        // --- TYPEWRITER STATE MANAGEMENT ---
+        let ribbonColor = 'black';
+        let isPaperLoaded = false;
+        let isJammed = false;
+        let jamLevel = 0;
+        let lastKeyPressTime = 0;
+
+        let carriageX = 0;
+        let maxCarriageX = 54;
+        let paperScrollY = 120;
+        const lineHeight = 26;
+        const charWidth = 7.5; // Grid spacing for letters
+
+        let isBatchimActive = false; // "받침" (Shift key state)
+
+        class Stamp {
+            constructor(char, cho, jung, jong, gridX, gridY, color, isCorrection = false) {
+                this.char = char;
+                this.cho = cho || '';
+                this.jung = jung || '';
+                this.jong = jong || '';
+                this.gridX = gridX;
+                this.gridY = gridY;
+                this.color = color;
+                this.isCorrection = isCorrection;
+
+                // Organic mechanical stamp defects
+                this.offsetX = (Math.random() - 0.5) * 1.5;
+                this.offsetY = (Math.random() - 0.5) * 1.2;
+                this.angle = (Math.random() - 0.5) * 0.04;
+                this.opacity = 0.84 + Math.random() * 0.16;
+                this.scale = 0.95 + Math.random() * 0.1;
+            }
+        }
+
+        let stamps = [];
+        let currentLineY = 0;
+
+        // DOM caching
+        const canvas = document.getElementById('paper-canvas');
+        const ctx = canvas.getContext('2d');
+        const paperContainer = document.getElementById('paper-container');
+        const carriage = document.getElementById('carriage');
+        const hiddenInput = document.getElementById('hidden-input');
+        const jamBar = document.getElementById('jam-bar');
+        const unjamBtn = document.getElementById('btn-unjam');
+        const typebar = document.getElementById('typebar');
+        const spoolL = document.getElementById('spool-l');
+        const spoolR = document.getElementById('spool-r');
+        const ribbonStrip = document.getElementById('ribbon-strip');
+        const paperAlert = document.getElementById('no-paper-alert');
+        const jamAlert = document.getElementById('jam-alert');
+        const batchimStatus = document.getElementById('batchim-status');
+
+        const scaleFactor = 2;
+        const canvasWidth = 440;
+        const canvasHeight = 600;
+        canvas.width = canvasWidth * scaleFactor;
+        canvas.height = canvasHeight * scaleFactor;
+        ctx.scale(scaleFactor, scaleFactor);
+
+        // --- DRAW CANVAS ARTWORK ---
+        function drawPaper() {
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+            if (!isPaperLoaded) return;
+
+            // Faint red line margin on left
+            ctx.strokeStyle = 'rgba(230, 80, 80, 0.15)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(45, 0);
+            ctx.lineTo(45, canvasHeight);
+            ctx.stroke();
+
+            // Guidelines
+            ctx.strokeStyle = 'rgba(80, 120, 230, 0.06)';
+            ctx.beginPath();
+            for (let y = 60; y < canvasHeight; y += lineHeight) {
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvasWidth, y);
+            }
+            ctx.stroke();
+
+            // Draw stamps
+            stamps.forEach(stamp => {
+                const drawX = 60 + (stamp.gridX * charWidth) + stamp.offsetX;
+                const drawY = 80 + (stamp.gridY * lineHeight) + stamp.offsetY;
+
+                if (drawY > canvasHeight + 50 || drawY < -50) return;
+
+                ctx.save();
+                ctx.translate(drawX, drawY);
+                ctx.rotate(stamp.angle);
+
+                if (stamp.isCorrection) {
+                    // White-out simulation brush stroke
+                    ctx.fillStyle = '#ffffff';
+                    ctx.shadowColor = '#eae5da';
+                    ctx.shadowBlur = 4;
+                    ctx.beginPath();
+                    ctx.arc(0, -5, 8, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    const ink = stamp.color === 'red' ? '#b51f1f' : '#262626';
+                    ctx.fillStyle = ink;
+                    ctx.shadowColor = ink;
+                    ctx.shadowBlur = 0.4;
+                    ctx.globalAlpha = stamp.opacity;
+
+                    const fontSize = 16 * stamp.scale;
+                    ctx.font = `bold ${fontSize}px 'Courier Prime', 'Song Myung', serif`;
+
+                    // Stack mechanical stamps correctly to represent vintage 2-set
+                    if (stamp.cho || stamp.jung || stamp.jong) {
+                        // Stamp initial consonant (slightly left-up)
+                        if (stamp.cho) {
+                            ctx.save();
+                            ctx.translate(-2, -3);
+                            ctx.fillText(stamp.cho, 0, 0);
+                            ctx.restore();
+                        }
+                        // Stamp vowel (right)
+                        if (stamp.jung) {
+                            ctx.save();
+                            ctx.translate(2.5, 0);
+                            ctx.fillText(stamp.jung, 0, 0);
+                            ctx.restore();
+                        }
+                        // Stamp batchim (bottom center)
+                        if (stamp.jong) {
+                            ctx.save();
+                            ctx.translate(0, 6.5);
+                            ctx.font = `bold ${fontSize * 0.9}px 'Courier Prime', 'Song Myung', serif`;
+                            ctx.fillText(stamp.jong, 0, 0);
+                            ctx.restore();
+                        }
+                    } else {
+                        // Raw character stamps (Numbers, English, individual elements)
+                        ctx.fillText(stamp.char, 0, 0);
+                    }
+                }
+                ctx.restore();
+            });
+        }
+
+        // --- TYPEWRITER SYSTEM CONTROLS ---
+
+        function updateCarriage() {
+            const targetX = -carriageX * charWidth;
+            carriage.style.transform = `translateX(${targetX}px)`;
+        }
+
+        function triggerStrike() {
+            typebar.classList.remove('typebar-striking');
+            void typebar.offsetWidth;
+            typebar.classList.add('typebar-striking');
+
+            // Rotate spool wheels organically
+            const deg = ribbonColor === 'red' ? 10 : -10;
+            const currentL = parseInt(spoolL.style.transform.replace(/[^\d-]/g, '')) || 0;
+            const currentR = parseInt(spoolR.style.transform.replace(/[^\d-]/g, '')) || 0;
+            spoolL.style.transform = `rotate(${currentL + deg}deg)`;
+            spoolR.style.transform = `rotate(${currentR - deg}deg)`;
+        }
+
+        function updateJam(elapsed) {
+            if (isJammed) return;
+
+            if (elapsed < 150) {
+                jamLevel += 35;
+            } else if (elapsed < 230) {
+                jamLevel += 12;
+            } else {
+                jamLevel = Math.max(0, jamLevel - 15);
+            }
+
+            if (jamLevel >= 100) {
+                jamLevel = 100;
+                isJammed = true;
+                jamAlert.classList.remove('hidden');
+                playMetalStrike();
+                showToast("너무 급하게 타이핑하여 활판이 엉켰습니다! 정돈 레버를 눌러주세요.", "⚠️");
+            }
+
+            jamBar.style.width = `${jamLevel}%`;
+            if (jamLevel > 80) {
+                jamBar.className = "bg-red-600 h-full transition-all duration-100";
+            } else if (jamLevel > 45) {
+                jamBar.className = "bg-amber-500 h-full transition-all duration-100";
+            } else {
+                jamBar.className = "bg-teal-500 h-full transition-all duration-100";
+            }
+        }
+
+        function forceUnjam() {
+            if (jamLevel === 0 && !isJammed) return;
+            isJammed = false;
+            jamLevel = 0;
+            jamBar.style.width = '0%';
+            jamAlert.classList.add('hidden');
+            playTypewriterClack(false);
+            showToast("활판 메커니즘을 매끄럽게 정돈했습니다.", "⚙️");
+        }
+
+        function toggleBatchim() {
+            isBatchimActive = !isBatchimActive;
+            batchimStatus.textContent = isBatchimActive ? '받침용 입력 활성' : '해제';
+            batchimStatus.className = isBatchimActive ? 'text-emerald-400 font-bold' : 'text-red-500';
+            playTypewriterClack(true);
+        }
+
+        // Core Typist Stamp Router
+        function processStamp(char) {
+            if (!isPaperLoaded) {
+                playMetalStrike();
+                showToast("먼저 새 종이를 급지해 주세요!", "📄");
+                return;
+            }
+            if (isJammed) {
+                playMetalStrike();
+                return;
+            }
+
+            // Jam check
+            const now = Date.now();
+            if (lastKeyPressTime > 0) {
+                updateJam(now - lastKeyPressTime);
+            }
+            lastKeyPressTime = now;
+
+            if (carriageX >= maxCarriageX) {
+                playBellRing();
+                playMetalStrike();
+                showToast("행의 끝에 도달했습니다. 줄 바꿈 레버를 당겨주세요!", "🔔");
+                return;
+            }
+
+            // Formulate stamp elements
+            const decomposed = decomposeSyllable(char);
+            let stampObj = null;
+
+            if (decomposed.length > 1) {
+                // Complete Korean syllable decomposed for overlapping stamps
+                stampObj = new Stamp(char, decomposed[0], decomposed[1], decomposed[2], carriageX, currentLineY, ribbonColor, false);
+            } else {
+                // Normal plain elements
+                // Handle batchim state modifiers
+                if (isBatchimActive && "ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㄲㅆ".includes(char)) {
+                    stampObj = new Stamp(char, '', '', char, carriageX, currentLineY, ribbonColor, false);
+                } else {
+                    stampObj = new Stamp(char, '', '', '', carriageX, currentLineY, ribbonColor, false);
+                }
+            }
+
+            stamps.push(stampObj);
+            carriageX++;
+            updateCarriage();
+            triggerStrike();
+            playTypewriterClack(false);
+            drawPaper();
+
+            // Ring bell before line boundary
+            if (carriageX === maxCarriageX - 5) {
+                playBellRing();
+            }
+        }
+
+        function moveBack() {
+            if (carriageX > 0) {
+                carriageX--;
+                updateCarriage();
+                playTypewriterClack(true);
+            } else {
+                playMetalStrike();
+            }
+        }
+
+        function performReturn() {
+            if (!isPaperLoaded) {
+                playMetalStrike();
+                return;
+            }
+
+            playReturnSlide();
+
+            const lever = document.getElementById('return-lever');
+            lever.style.transform = 'rotate(-30deg)';
+            setTimeout(() => {
+                lever.style.transform = 'rotate(0deg)';
+            }, 250);
+
+            currentLineY++;
+            carriageX = 0;
+            updateCarriage();
+
+            paperScrollY -= lineHeight;
+            if (paperScrollY < -240) paperScrollY = -240;
+            paperContainer.style.transform = `translateY(${paperScrollY}px)`;
+        }
+
+        function applyWhiteout() {
+            if (!isPaperLoaded || isJammed) {
+                playMetalStrike();
+                return;
+            }
+            stamps.push(new Stamp('', '', '', '', carriageX, currentLineY, ribbonColor, true));
+            triggerStrike();
+            playTypewriterClack(true);
+            drawPaper();
+            showToast("오타 위치에 아날로그 수정액을 바릅니다.", "💧");
+        }
+
+        // --- PAPER HANDLERS ---
+        function loadPaper() {
+            if (isPaperLoaded) return;
+            playPaperScroll();
+            isPaperLoaded = true;
+            paperScrollY = 120;
+            carriageX = 0;
+            currentLineY = 0;
+            stamps = [];
+
+            paperContainer.style.transform = `translateY(${paperScrollY}px)`;
+            paperContainer.style.opacity = '1';
+            paperAlert.classList.add('opacity-0');
+
+            setTimeout(() => drawPaper(), 100);
+            showToast("종이를 실린더 롤러에 성공적으로 밀어 넣었습니다.", "📄");
+        }
+
+        function ripPaper() {
+            if (!isPaperLoaded) return;
+            playPaperRip();
+
+            const dataUrl = canvas.toDataURL("image/png");
+            document.getElementById('rip-image-preview').src = dataUrl;
+            document.getElementById('download-link').href = dataUrl;
+            document.getElementById('download-link').download = `1970s_민트_타자기_기록_${new Date().toISOString().slice(0,10)}.png`;
+
+            document.getElementById('modal-rip').classList.remove('hidden');
+
+            isPaperLoaded = false;
+            paperContainer.style.opacity = '0';
+            paperContainer.style.transform = `translateY(400px)`;
+            paperAlert.classList.remove('opacity-0');
+            drawPaper();
+        }
+
+        // --- KEYBOARD SYSTEM INPUT HOOKS ---
+        hiddenInput.addEventListener('input', (e) => {
+            const val = e.target.value;
+            if (val.length > 0) {
+                const char = val.charAt(val.length - 1);
+                if (char === ' ') {
+                    if (isPaperLoaded && !isJammed && carriageX < maxCarriageX) {
+                        carriageX++;
+                        updateCarriage();
+                        playTypewriterClack(true);
+                    } else {
+                        playMetalStrike();
+                    }
+                } else if (char === '\n') {
+                    performReturn();
+                } else {
+                    processStamp(char);
+                }
+            }
+            hiddenInput.value = '';
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (document.activeElement !== hiddenInput && !document.getElementById('modal-rip').classList.contains('hidden')) {
+                return;
+            }
+            if (e.target.tagName === 'INPUT' || (e.target.tagName === 'TEXTAREA' && e.target !== hiddenInput)) {
+                return;
+            }
+
+            hiddenInput.focus();
+
+            if (e.key === 'Shift') {
+                isBatchimActive = true;
+                batchimStatus.textContent = '받침용 입력 활성';
+                batchimStatus.className = 'text-emerald-400 font-bold';
+            }
+
+            // Keycap visual push animation
+            let normalKey = e.key.toLowerCase();
+            const keys = document.querySelectorAll('.vintage-key');
+            keys.forEach(k => {
+                if (k.dataset.char === normalKey || k.dataset.shift === normalKey || k.dataset.char === e.key) {
+                    k.classList.add('pressed');
+                    setTimeout(() => k.classList.remove('pressed'), 100);
+                }
+            });
+
+            if (e.key === 'Backspace') {
+                e.preventDefault();
+                moveBack();
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                performReturn();
+            } else if (e.key === 'Escape') {
+                forceUnjam();
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if (e.key === 'Shift') {
+                isBatchimActive = false;
+                batchimStatus.textContent = '해제';
+                batchimStatus.className = 'text-red-500';
+            }
+        });
+
+        // --- RENDER DYNAMIC VINTAGE KEYBOARD ---
+        function renderKeyboard() {
+            const container = document.getElementById('virtual-keyboard');
+            container.innerHTML = '';
+
+            VISUAL_KEYBOARD.forEach(row => {
+                const rowEl = document.createElement('div');
+                rowEl.className = "flex justify-center gap-1.5 md:gap-2";
+
+                row.forEach(key => {
+                    const keyBtn = document.createElement('button');
+                    
+                    // Tailor widths for special keys from photo
+                    let widthClass = "w-8 h-8 md:w-11 md:h-11";
+                    if (key.type === 'shift') {
+                        widthClass = "w-14 h-8 md:w-18 md:h-11"; // Oval "받침" Shift
+                    } else if (key.type === 'red-tab') {
+                        widthClass = "w-12 h-8 md:w-16 md:h-11"; // Rectangular Red TAB
+                    } else if (key.primary === '⟵') {
+                        widthClass = "w-10 h-8 md:w-14 md:h-11"; // Backspace
+                    }
+
+                    keyBtn.className = `vintage-key ${widthClass} flex flex-col justify-center items-center cursor-pointer text-center font-sans select-none`;
+                    
+                    // Specific highlight classes
+                    if (key.type === 'red-tab' || key.primary === '⟵') {
+                        keyBtn.classList.add('vintage-key-red');
+                    }
+
+                    // Key datasets for event matching
+                    keyBtn.dataset.char = key.primary.toLowerCase();
+                    keyBtn.dataset.shift = key.shift.toLowerCase();
+
+                    // Rich labels matching actual typewriter double legends
+                    if (key.primary === key.shift) {
+                        keyBtn.innerHTML = `<span class="text-xs md:text-sm font-bold">${key.primary}</span>`;
+                    } else {
+                        keyBtn.innerHTML = `
+                            <span class="text-[8px] md:text-[9px] text-stone-300 font-sans -mt-0.5">${key.shift}</span>
+                            <span class="text-xs md:text-sm font-bold -mt-0.5">${key.primary}</span>
+                        `;
+                    }
+
+                    // Handlers
+                    keyBtn.addEventListener('mousedown', (e) => {
+                        e.preventDefault();
+                        hiddenInput.focus();
+                        
+                        if (key.primary === '받침') {
+                            toggleBatchim();
+                        } else if (key.primary === '⟵') {
+                            moveBack();
+                        } else if (key.primary === 'TAB') {
+                            if (isPaperLoaded && !isJammed && carriageX < maxCarriageX - 4) {
+                                carriageX += 4;
+                                updateCarriage();
+                                playTypewriterClack(true);
+                            } else {
+                                playMetalStrike();
+                            }
+                        } else if (key.primary === '🔒') {
+                            playTypewriterClack(true);
+                        } else {
+                            const actualChar = isBatchimActive ? key.shift : key.primary;
+                            processStamp(actualChar);
+                        }
+                    });
+
+                    rowEl.appendChild(keyBtn);
+                });
+                container.appendChild(rowEl);
+            });
+
+            // Bottom Spacebar Row
+            const spaceRow = document.createElement('div');
+            spaceRow.className = "flex justify-center gap-3 mt-1";
+
+            const spaceBtn = document.createElement('button');
+            spaceBtn.className = "vintage-key w-48 md:w-80 h-8 md:h-11 cursor-pointer";
+            spaceBtn.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                hiddenInput.focus();
+                if (isPaperLoaded && !isJammed && carriageX < maxCarriageX) {
+                    carriageX++;
+                    updateCarriage();
+                    playTypewriterClack(true);
+                } else {
+                    playMetalStrike();
+                }
+            });
+
+            // Red forward arrow repeat space key from image
+            const repeatBtn = document.createElement('button');
+            repeatBtn.className = "vintage-key vintage-key-red w-14 h-8 md:w-20 md:h-11 font-bold cursor-pointer flex items-center justify-center";
+            repeatBtn.innerHTML = `<span class="text-sm">⟶</span>`;
+            repeatBtn.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                hiddenInput.focus();
+                // Space repeat advance
+                if (isPaperLoaded && !isJammed && carriageX < maxCarriageX - 2) {
+                    carriageX += 2;
+                    updateCarriage();
+                    playTypewriterClack(true);
+                } else {
+                    playMetalStrike();
+                }
+            });
+
+            spaceRow.appendChild(spaceBtn);
+            spaceRow.appendChild(repeatBtn);
+            container.appendChild(spaceRow);
+        }
+
+        // --- ATTACH NOB AND SCROLL TRIGGERS ---
+        paperContainer.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            if (!isPaperLoaded) return;
+            playPaperScroll();
+            const dir = e.deltaY > 0 ? -1 : 1;
+            paperScrollY += dir * 14;
+            if (paperScrollY < -240) paperScrollY = -240;
+            if (paperScrollY > 180) paperScrollY = 180;
+            paperContainer.style.transform = `translateY(${paperScrollY}px)`;
+        });
+
+        const knobs = [document.getElementById('knob-left'), document.getElementById('knob-right')];
+        knobs.forEach(knob => {
+            let startY = 0;
+            let startScroll = 0;
+            const onDrag = (e) => {
+                if (!isPaperLoaded) return;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                const deltaY = clientY - startY;
+                paperScrollY = startScroll - Math.round(deltaY / 1.8);
+                if (paperScrollY < -240) paperScrollY = -240;
+                if (paperScrollY > 180) paperScrollY = 180;
+                paperContainer.style.transform = `translateY(${paperScrollY}px)`;
+            };
+            const stopDrag = () => {
+                window.removeEventListener('mousemove', onDrag);
+                window.removeEventListener('mouseup', stopDrag);
+                window.removeEventListener('touchmove', onDrag);
+                window.removeEventListener('touchend', stopDrag);
+            };
+            const startDrag = (e) => {
+                if (!isPaperLoaded) return;
+                e.preventDefault();
+                startY = e.touches ? e.touches[0].clientY : e.clientY;
+                startScroll = paperScrollY;
+                playPaperScroll();
+                window.addEventListener('mousemove', onDrag);
+                window.addEventListener('mouseup', stopDrag);
+                window.addEventListener('touchmove', onDrag, { passive: false });
+                window.addEventListener('touchend', stopDrag);
+            };
+            knob.addEventListener('mousedown', startDrag);
+            knob.addEventListener('touchstart', startDrag, { passive: false });
+        });
+
+        // --- BUTTON BINDINGS ---
+        document.getElementById('btn-load-paper').addEventListener('click', loadPaper);
+        document.getElementById('btn-rip-paper').addEventListener('click', ripPaper);
+        document.getElementById('btn-unjam').addEventListener('click', forceUnjam);
+        document.getElementById('return-lever').addEventListener('click', performReturn);
+        document.getElementById('btn-correction').addEventListener('click', applyWhiteout);
+        document.getElementById('btn-backspace').addEventListener('click', moveBack);
+        document.getElementById('btn-latch-batchim').addEventListener('click', toggleBatchim);
+
+        // Sound configuration
+        const soundBtn = document.getElementById('btn-sound-toggle');
+        soundBtn.addEventListener('click', () => {
+            isSoundEnabled = !isSoundEnabled;
+            soundBtn.textContent = isSoundEnabled ? '🔊 소리 켬' : '🔇 소리 끔';
+            soundBtn.className = isSoundEnabled 
+                ? "px-3 py-1.5 bg-teal-600/30 hover:bg-teal-600/50 text-teal-300 rounded border border-teal-600/50 text-sm transition font-sans"
+                : "px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-400 rounded border border-stone-700 text-sm transition font-sans";
+        });
+
+        // Ribbon Selector
+        const rBlack = document.getElementById('ribbon-black');
+        const rRed = document.getElementById('ribbon-red');
+        rBlack.addEventListener('click', () => {
+            ribbonColor = 'black';
+            rBlack.className = "w-6 h-6 rounded-full bg-stone-900 border-2 border-teal-500 cursor-pointer scale-110 transition";
+            rRed.className = "w-6 h-6 rounded-full bg-red-700 border border-stone-700 cursor-pointer transition hover:scale-110";
+            ribbonStrip.style.backgroundColor = '#1c1c1c';
+            playTypewriterClack(true);
+            showToast("검은색 인크 리본으로 변경했습니다.", "🖤");
+        });
+        rRed.addEventListener('click', () => {
+            ribbonColor = 'red';
+            rRed.className = "w-6 h-6 rounded-full bg-red-700 border-2 border-teal-500 cursor-pointer scale-110 transition";
+            rBlack.className = "w-6 h-6 rounded-full bg-stone-900 border border-stone-700 cursor-pointer transition hover:scale-110";
+            ribbonStrip.style.backgroundColor = '#7a1414';
+            playTypewriterClack(true);
+            showToast("빨간색 인크 리본으로 변경했습니다.", "❤️");
+        });
+
+        // Modal triggers
+        document.getElementById('btn-manual').addEventListener('click', () => {
+            document.getElementById('modal-manual').classList.remove('hidden');
+        });
+        document.getElementById('btn-manual-close').addEventListener('click', () => {
+            document.getElementById('modal-manual').classList.add('hidden');
+        });
+        document.getElementById('btn-rip-close').addEventListener('click', () => {
+            document.getElementById('modal-rip').classList.add('hidden');
+        });
+
+        // Export/Copy Document
+        document.getElementById('btn-copy-text').addEventListener('click', () => {
+            if (stamps.length === 0) {
+                showToast("복사할 내용이 비어 있습니다.", "⚠️");
+                return;
+            }
+            let textLines = [];
+            stamps.forEach(stamp => {
+                if (stamp.isCorrection) return;
+                if (!textLines[stamp.gridY]) textLines[stamp.gridY] = [];
+                textLines[stamp.gridY][stamp.gridX] = stamp.char;
+            });
+            let finalStr = textLines.map(line => {
+                if (!line) return "";
+                for (let i = 0; i < line.length; i++) {
+                    if (!line[i]) line[i] = " ";
+                }
+                return line.join("");
+            }).join("\n");
+
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = finalStr;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+
+            showToast("클립보드에 작성된 전체 본문을 복사했습니다!", "📋");
+        });
+
+        // Keep input focused
+        document.querySelector('main').addEventListener('click', (e) => {
+            if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A' && !e.target.closest('#modal-rip') && !e.target.closest('#modal-manual')) {
+                hiddenInput.focus();
+            }
+        });
+
+        // --- DECAY JAM ASYNC ---
+        setInterval(() => {
+            if (jamLevel > 0 && !isJammed) {
+                jamLevel = Math.max(0, jamLevel - 6);
+                jamBar.style.width = `${jamLevel}%`;
+            }
+        }, 700);
+
+        // --- INIT ---
+        window.onload = function() {
+            renderKeyboard();
+            drawPaper();
+            hiddenInput.focus();
+        };
+    </script>
+</body>
+</html>
