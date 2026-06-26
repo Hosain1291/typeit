@@ -444,32 +444,12 @@
     </div>
 
     <script>
-        // --- 1. 디바이스 입력 감지 ---
+
+    <script>
+        // --- 1. DEVICE DETECT ---
         const isMobileDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
-        // --- 2. 한글 오토마타 구조 데이터 ---
-        const CONSONANTS = new Set([
-            'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ',
-            'ㄳ', 'ㄵ', 'ㄶ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅄ'
-        ]);
-        
-        const VOWELS = new Set([
-            'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅛ', 'ㅜ', 'ㅠ', 'ㅡ', 'ㅣ',
-            'ㅘ', 'ㅙ', 'ㅚ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅢ'
-        ]);
-
-        const COMPLEX_JUNG = {
-            'ㅗㅏ': 'ㅘ', 'ㅗㅐ': 'ㅙ', 'ㅗㅣ': 'ㅚ',
-            'ㅜㅓ': 'ㅝ', 'ㅜㅔ': 'ㅞ', 'ㅜㅣ': 'ㅟ',
-            'ㅡㅣ': 'ㅢ'
-        };
-
-        const COMPLEX_JONG = {
-            'ㄱㅅ': 'ㄳ', 'ㄴㅈ': 'ㄵ', 'ㄴㅎ': 'ㄶ',
-            'ㄹㄱ': 'ㄺ', 'ㄹㅁ': 'ㄻ', 'ㄹㅂ': 'ㄼ', 'ㄹㅅ': 'ㄽ', 'ㄹㅌ': 'ㄾ', 'ㄹㅍ': 'ㄿ', 'ㄹㅎ': 'ㅀ',
-            'ㅂㅅ': 'ㅄ'
-        };
-
+        // --- 2. HANGUL MAPS ---
         const CHO_MAP = {
             'ㄱ': 0, 'ㄲ': 1, 'ㄴ': 2, 'ㄷ': 3, 'ㄸ': 4, 'ㄹ': 5, 'ㅁ': 6, 'ㅂ': 7, 'ㅃ': 8,
             'ㅅ': 9, 'ㅆ': 10, 'ㅇ': 11, 'ㅈ': 12, 'ㅉ': 13, 'ㅊ': 14, 'ㅋ': 15, 'ㅌ': 16,
@@ -487,7 +467,39 @@
             'ㅌ': 25, 'ㅍ': 26, 'ㅎ': 27
         };
 
-        // 하드웨어 스캔코드 맵핑
+        const COMPLEX_JUNG = {
+            'ㅗㅏ': 'ㅘ', 'ㅗㅐ': 'ㅙ', 'ㅗㅣ': 'ㅚ',
+            'ㅜㅓ': 'ㅝ', 'ㅜㅔ': 'ㅞ', 'ㅜㅣ': 'ㅟ',
+            'ㅡㅣ': 'ㅢ'
+        };
+
+        const COMPLEX_JONG = {
+            'ㄱㅅ': 'ㄳ', 'ㄴㅈ': 'ㄵ', 'ㄴㅎ': 'ㄶ',
+            'ㄹㄱ': 'ㄺ', 'ㄹㅁ': 'ㄻ', 'ㄹㅂ': 'ㄼ', 'ㄹㅅ': 'ㄽ', 'ㄹㅌ': 'ㄾ', 'ㄹㅍ': 'ㄿ', 'ㄹㅎ': 'ㅀ',
+            'ㅂㅅ': 'ㅄ'
+        };
+
+        const SPLIT_JONG = {
+            'ㄳ': ['ㄱ', 'ㅅ'], 'ㄵ': ['ㄴ', 'ㅈ'], 'ㄶ': ['ㄴ', 'ㅎ'],
+            'ㄺ': ['ㄹ', 'ㄱ'], 'ㄻ': ['ㄹ', 'ㅁ'], 'ㄼ': ['ㄹ', 'ㅂ'], 'ㄽ': ['ㄹ', 'ㅅ'],
+            'ㄾ': ['ㄹ', 'ㅌ'], 'ㄿ': ['ㄹ', 'ㅍ'], 'ㅀ': ['ㄹ', 'ㅎ'], 'ㅄ': ['ㅂ', 'ㅅ']
+        };
+
+        const ALLOWED_JONG = new Set([
+            'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+        ]);
+
+        const CONSONANTS = new Set([
+            'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ',
+            'ㄳ', 'ㄵ', 'ㄶ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅄ'
+        ]);
+        
+        const VOWELS = new Set([
+            'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅛ', 'ㅜ', 'ㅠ', 'ㅡ', 'ㅣ',
+            'ㅘ', 'ㅙ', 'ㅚ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅢ'
+        ]);
+
+        // 물리 하드웨어 키스캔코드 두벌식 매핑 엔진
         const CODE_TO_KOR = {
             'KeyQ': 'ㅂ', 'KeyW': 'ㅈ', 'KeyE': 'ㄷ', 'KeyR': 'ㄱ', 'KeyT': 'ㅅ', 'KeyY': 'ㅛ', 'KeyU': 'ㅕ', 'KeyI': 'ㅑ', 'KeyO': 'ㅐ', 'KeyP': 'ㅔ',
             'KeyA': 'ㅁ', 'KeyS': 'ㄴ', 'KeyD': 'ㅇ', 'KeyF': 'ㄹ', 'KeyG': 'ㅎ', 'KeyH': 'ㅗ', 'KeyJ': 'ㅓ', 'KeyK': 'ㅏ', 'KeyL': 'ㅣ', 'Semicolon': 'ㄶ',
@@ -511,6 +523,68 @@
             'a':'ㅁ', 's':'ㄴ', 'd':'ㅇ', 'f':'ㄹ', 'g':'ㅎ', 'h':'ㅗ', 'j':'ㅓ', 'k':'ㅏ', 'l':'ㅣ',
             'z':'ㅋ', 'x':'ㅌ', 'c':'ㅊ', 'v':'ㅍ', 'b':'ㅠ', 'n':'ㅜ', 'm':'ㅡ'
         };
+
+        // 가상 키보드 고증 배치도
+        const VISUAL_KEYBOARD = [
+            [
+                { primary: "1", shift: "!", type: "normal" },
+                { primary: "2", shift: "\"", type: "normal" },
+                { primary: "3", shift: "₩", type: "normal" },
+                { primary: "4", shift: "$", type: "normal" },
+                { primary: "5", shift: "%", type: "normal" },
+                { primary: "6", shift: "/", type: "normal" },
+                { primary: "7", shift: ":", type: "normal" },
+                { primary: "8", shift: "(", type: "normal" },
+                { primary: "9", shift: ")", type: "normal" },
+                { primary: "0", shift: "-", type: "normal" },
+                { primary: "ㄲ", shift: "*", type: "normal" },
+                { primary: "ㄻ", shift: "+", type: "normal" }
+            ],
+            [
+                { primary: "⇹", shift: "⇹", type: "normal" }, 
+                { primary: "ㅂ", shift: "ㅃ", type: "normal" },
+                { primary: "ㅈ", shift: "ㅉ", type: "normal" },
+                { primary: "ㄷ", shift: "ㄸ", type: "normal" },
+                { primary: "ㄱ", shift: "ㄲ", type: "normal" },
+                { primary: "ㅅ", shift: "ㅆ", type: "normal" },
+                { primary: "ㅛ", shift: "ㅛ", type: "normal" },
+                { primary: "ㅕ", shift: "ㅕ", type: "normal" },
+                { primary: "ㅑ", shift: "ㅑ", type: "normal" },
+                { primary: "ㅐ", shift: "ㅒ", type: "normal" },
+                { primary: "ㅔ", shift: "ㅖ", type: "normal" },
+                { primary: "ㄺ", shift: "?", type: "normal" },
+                { primary: "⟵", shift: "⟵", type: "special" } 
+            ],
+            [
+                { primary: "🔒", shift: "🔒", type: "special" }, 
+                { primary: "ㅁ", shift: "ㅁ", type: "normal" },
+                { primary: "ㄴ", shift: "ㄴ", type: "normal" },
+                { primary: "ㅇ", shift: "ㅇ", type: "normal" },
+                { primary: "ㄹ", shift: "ㄹ", type: "normal" },
+                { primary: "ㅎ", shift: "ㅎ", type: "normal" },
+                { primary: "ㅗ", shift: "ㅗ", type: "normal" },
+                { primary: "ㅓ", shift: "ㅓ", type: "normal" },
+                { primary: "ㅏ", shift: "ㅏ", type: "normal" },
+                { primary: "ㅣ", shift: "ㅣ", type: "normal" },
+                { primary: "ㄶ", shift: ";", type: "normal" },
+                { primary: "ㅆ", shift: "\"", type: "normal" },
+                { primary: "TAB", shift: "TAB", type: "red-tab" } 
+            ],
+            [
+                { primary: "받침", shift: "받침", type: "shift" }, 
+                { primary: "ㅋ", shift: "ㅋ", type: "normal" },
+                { primary: "ㅌ", shift: "ㅌ", type: "normal" },
+                { primary: "ㅊ", shift: "ㅊ", type: "normal" },
+                { primary: "ㅍ", shift: "ㅍ", type: "normal" },
+                { primary: "ㅠ", shift: "ㅠ", type: "normal" },
+                { primary: "ㅜ", shift: "ㅜ", type: "normal" },
+                { primary: "ㅡ", shift: "ㅡ", type: "normal" },
+                { primary: "ㅄ", shift: ",", type: "normal" },
+                { primary: "·", shift: "ㅡ", type: "normal" },
+                { primary: "?", shift: ".", type: "normal" },
+                { primary: "받침", shift: "받침", type: "shift" } 
+            ]
+        ];
 
         // --- 3. 타자기 제어 리스트 및 상태 변수 ---
         let ribbonColor = 'black';
