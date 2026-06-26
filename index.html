@@ -33,8 +33,1734 @@
             border: 4px solid #6cb1a1;
         }
 
-        /* 실물 기계식 입체 사각형 키캡 (기본 문자 키: 라이트 크림 그레이) */
-        .retro-square-key {
+        /* 실물 기계식 크롬 메탈 테두리 원형 키캡 */
+        .vintage-key {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            border: 2px solid #d1d5db; /* 크롬 도금 느낌의 유광 은빛 실버 림 */
+            background: radial-gradient(circle at center, #2e2e2e 0%, #111111 100%); /* 다크 차콜 원형 안쪽 키캡 */
+            box-shadow: 0 4px 0 #080808, /* 원형 키 베이스 기둥 입체감 */
+                        0 6px 10px rgba(0,0,0,0.75), /* 물리 그림자 */
+                        inset 0 1px 2px rgba(255,255,255,0.25); /* 상단 하이라이트 */
+            color: #ffffff;
+            text-shadow: 0 -1px 0 rgba(0,0,0,0.9);
+            transition: all 0.05s ease;
+            position: relative;
+        }
+
+        /* 키캡이 실제로 들어가는 물리적 반발 운동 피드백 */
+        .vintage-key:active, .vintage-key.pressed {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #080808,
+                        0 2px 4px rgba(0,0,0,0.8),
+                        inset 0 2px 4px rgba(0,0,0,0.7);
+            background: #0d0d0d;
+            border-color: #9ca3af;
+        }
+
+        /* 크롬 림 레드 포인트 키캡 (오른쪽 TAB 및 기능 키 고증) */
+        .vintage-key-red {
+            border-color: #ff9999 !important;
+            background: radial-gradient(circle at center, #ff4d4d 0%, #9e1313 100%) !important;
+            box-shadow: 0 4px 0 #4f0303,
+                        0 6px 10px rgba(0,0,0,0.75),
+                        inset 0 1px 2px rgba(255,255,255,0.4) !important;
+        }
+        .vintage-key-red:active, .vintage-key-red.pressed {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #4f0303,
+                        0 2px 4px rgba(0,0,0,0.8),
+                        inset 0 2px 4px rgba(0,0,0,0.8) !important;
+            background: #6e0000 !important;
+        }
+
+        /* 오리지널 스페이스바 */
+        .vintage-spacebar {
+            background: radial-gradient(circle at center, #3a3a3a 0%, #1a1a1a 100%);
+            border: 2px solid #555555;
+            box-shadow: 0 5px 0 #080808,
+                        0 7px 12px rgba(0,0,0,0.8),
+                        inset 0 1px 2px rgba(255,255,255,0.2);
+            border-radius: 12px;
+            transition: all 0.05s ease;
+        }
+        .vintage-spacebar:active, .vintage-spacebar.pressed {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #080808,
+                        0 3px 5px rgba(0,0,0,0.8),
+                        inset 0 2px 4px rgba(0,0,0,0.7);
+        }
+
+        /* 가상 키 사이즈 반응형 홀더 */
+        .key-size-normal {
+            width: 7.3vw;
+            height: 7.3vw;
+            max-width: 48px;
+            max-height: 48px;
+            min-width: 32px;
+            min-height: 32px;
+        }
+        .key-size-shift {
+            width: 12.5vw;
+            height: 7.3vw;
+            max-width: 78px;
+            max-height: 48px;
+            min-width: 44px;
+            min-height: 32px;
+            border-radius: 12px !important;
+        }
+        .key-size-special {
+            width: 10.5vw;
+            height: 7.3vw;
+            max-width: 66px;
+            max-height: 48px;
+            min-width: 38px;
+            min-height: 32px;
+            border-radius: 12px !important;
+        }
+
+        /* 캐리지 하드웨어 연동 부드러운 움직임 */
+        .carriage-transition {
+            transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* 실제 1980년대 철제 활자(Type Hammer) 타격 모션 */
+        @keyframes strikeHammer {
+            0% { transform: translate(-50%, 40px) scaleY(0.1) rotate(0deg); opacity: 0; }
+            45% { transform: translate(-50%, -64px) scaleY(1.0) rotate(0deg); opacity: 1; }
+            100% { transform: translate(-50%, 40px) scaleY(0.1) rotate(0deg); opacity: 0; }
+        }
+        .typebar-striking {
+            animation: strikeHammer 0.11s ease-in-out;
+        }
+
+        /* 토스트 팝업 */
+        #custom-toast {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(20px);
+        }
+        #custom-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-stone-200 overflow-x-hidden flex flex-col justify-between select-none font-sans">
+
+    <!-- Toast Notification -->
+    <div id="custom-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-stone-900 border border-teal-500 text-teal-400 px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 z-50 opacity-0 pointer-events-none text-sm">
+        <span class="text-base" id="toast-icon">✨</span>
+        <span id="toast-text">알림 메시지</span>
+    </div>
+
+    <!-- Header Block -->
+    <header class="w-full bg-stone-900/95 border-b border-stone-800 p-4 shadow-md backdrop-blur flex justify-between items-center z-50">
+        <div class="flex items-center space-x-3 font-sans">
+            <span class="text-3xl">📟</span>
+            <div>
+                <h1 class="text-2xl md:text-3xl font-extrabold text-teal-400 tracking-wider font-mono">Typeit</h1>
+                <p class="text-xs text-stone-400">Joseon100Years Font Embedded & 11px Carriage Centering Engine</p>
+            </div>
+        </div>
+        <div class="flex space-x-3 font-sans">
+            <button id="btn-manual" class="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-300 rounded border border-stone-700 text-sm transition">
+                📖 도움말
+            </button>
+            <button id="btn-sound-toggle" class="px-3 py-1.5 bg-teal-600/30 hover:bg-teal-600/50 text-teal-300 rounded border border-teal-600/50 text-sm transition">
+                🔊 소리 켬
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center justify-start p-2 md:p-4 w-full mx-auto max-w-5xl gap-4">
+        
+        <!-- Controls Header -->
+        <div class="w-full flex flex-wrap justify-between items-center gap-3 bg-stone-900/70 p-3 rounded-lg border border-stone-800 backdrop-blur">
+            <div class="flex flex-wrap items-center gap-4">
+                <!-- Ribbon Color -->
+                <div class="flex flex-col">
+                    <span class="text-xs text-stone-400 mb-1">인쇄 리본 색상</span>
+                    <div class="flex items-center space-x-2 bg-stone-950 p-1 rounded border border-stone-800">
+                        <button id="ribbon-black" class="w-6 h-6 rounded-full bg-stone-900 border-2 border-teal-500 cursor-pointer transition transform scale-110" title="검정 리본"></button>
+                        <button id="ribbon-red" class="w-6 h-6 rounded-full bg-red-700 border border-stone-700 cursor-pointer transition hover:scale-110" title="빨강 리본"></button>
+                    </div>
+                </div>
+
+                <!-- Paper Color Picker -->
+                <div class="flex flex-col">
+                    <span class="text-xs text-stone-400 mb-1">📄 종이 종류</span>
+                    <div class="flex items-center space-x-1 bg-stone-950 p-1 rounded border border-stone-800 h-[32px]">
+                        <button id="paper-white-btn" class="px-2.5 py-0.5 text-xs font-bold rounded bg-teal-600 text-stone-950 transition-all">⬜ 하얀색</button>
+                        <button id="paper-cream-btn" class="px-2.5 py-0.5 text-xs font-bold rounded hover:bg-stone-800 text-stone-400 transition-all">🥛 크림색</button>
+                        <button id="paper-yellow-btn" class="px-2.5 py-0.5 text-xs font-bold rounded hover:bg-stone-800 text-stone-400 transition-all">🟨 노란색</button>
+                    </div>
+                </div>
+
+                <!-- ★ [글자 자간] 고정 배지 가시화 (1px 옵션 제거) ★ -->
+                <div class="flex flex-col">
+                    <span class="text-xs text-stone-400 mb-1">📐 글자 자간</span>
+                    <div class="px-3.5 py-1 bg-stone-950 rounded text-teal-400 border border-stone-800 text-xs font-bold h-[32px] flex items-center">
+                        ⚡ 11px (고정)
+                    </div>
+                </div>
+
+                <div class="flex flex-col">
+                    <span class="text-xs text-stone-400 mb-1">글꼴 상태</span>
+                    <div id="font-status-badge" class="px-3 py-1 bg-stone-950 rounded text-red-400 border border-stone-800 text-xs font-bold h-[32px] flex items-center">
+                        ⏳ 조선일보 서체 로딩 중...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="flex items-center space-x-2">
+                <button id="btn-load-paper" class="px-3 md:px-4 py-2 bg-emerald-700 hover:bg-emerald-600 text-stone-100 rounded font-bold shadow border border-emerald-600 text-xs md:text-sm transition">
+                    📄 새 종이 넣기
+                </button>
+                <button id="btn-rip-paper" class="px-3 md:px-4 py-2 bg-red-950 hover:bg-red-900 text-red-200 rounded font-bold shadow border border-red-900 text-xs md:text-sm transition">
+                    ✂️ 종이 뜯기
+                </button>
+            </div>
+        </div>
+
+        <!-- 1. CARRIAGE ASSEMBLY -->
+        <div id="carriage-scale-wrapper" class="w-full flex justify-center items-start origin-top transition-all duration-300">
+            <div id="typewriter-top-chassis" class="w-[896px] typewriter-body rounded-2xl p-6 flex flex-col items-center gap-6 relative overflow-hidden shrink-0">
+                
+                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+
+                <!-- Platen Roller Body -->
+                <div class="w-full bg-stone-900 rounded-xl p-3 border-b-4 border-stone-950 relative shadow-2xl flex flex-col items-center overflow-hidden h-[340px]">
+                    <!-- Metal rails -->
+                    <div class="absolute left-0 right-0 top-1/2 h-4 bg-gradient-to-b from-stone-400 via-stone-200 to-stone-500 border-y border-stone-600 z-0"></div>
+
+                    <!-- CARRIAGE CONTAINER -->
+                    <div id="carriage" class="absolute h-full w-[800px] z-10 carriage-transition flex flex-col justify-center items-center" style="transform: translateX(165px);">
+                        
+                        <!-- Carriage Return Lever -->
+                        <div id="return-lever" class="absolute left-10 top-1/4 w-4 h-24 bg-gradient-to-r from-stone-300 via-stone-100 to-stone-400 rounded-lg cursor-pointer transform origin-bottom border border-stone-500 shadow-md hover:brightness-110 active:rotate-12 transition-transform duration-100 z-30" title="줄 바꿈 레버 (Enter)">
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-4 bg-stone-200 rounded-full border border-stone-400"></div>
+                            <span class="absolute -top-6 -left-3 text-[10px] text-stone-400 rotate-12 font-bold">줄 바꿈</span>
+                        </div>
+
+                        <!-- Left Platen Knob -->
+                        <div id="knob-left" class="absolute -left-6 top-1/2 -translate-y-1/2 w-8 h-12 bg-gradient-to-r from-stone-100 to-stone-200 rounded border-y border-stone-400 cursor-ns-resize shadow-lg flex flex-col justify-between p-1 z-30">
+                            <div class="h-0.5 bg-stone-400 w-full"></div>
+                            <div class="h-0.5 bg-stone-400 w-full"></div>
+                            <div class="h-0.5 bg-stone-400 w-full"></div>
+                        </div>
+
+                        <!-- Right Platen Knob -->
+                        <div id="knob-right" class="absolute -right-6 top-1/2 -translate-y-1/2 w-8 h-12 bg-gradient-to-l from-stone-100 to-stone-200 rounded border-y border-stone-400 cursor-ns-resize shadow-lg flex flex-col justify-between p-1 z-30">
+                            <div class="h-0.5 bg-stone-400 w-full"></div>
+                            <div class="h-0.5 bg-stone-400 w-full"></div>
+                            <div class="h-0.5 bg-stone-400 w-full"></div>
+                        </div>
+
+                        <!-- THE PLATEN ROLLER -->
+                        <div class="w-[520px] h-[270px] bg-stone-950 rounded-lg border-2 border-stone-800 relative shadow-inner overflow-hidden flex justify-center items-center">
+                            <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-16 bg-stone-900/60 border-y border-stone-800 pointer-events-none z-0"></div>
+
+                            <!-- PAPER CONTAINER -->
+                            <div id="paper-container" class="absolute w-[440px] h-[600px] bg-[#fcfcfc] shadow-2xl transition-all duration-300 transform rounded border border-stone-300/50 z-10 flex flex-col overflow-hidden" style="transform: translateY(120px); opacity: 0;">
+                                <div class="absolute inset-0 bg-[radial-gradient(#ebd9c0_1px,transparent_0)] bg-[length:5px_5px] opacity-15 pointer-events-none"></div>
+                                <canvas id="paper-canvas" class="w-full h-full block z-10 cursor-text"></canvas>
+                                <div class="absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-black/10 to-transparent pointer-events-none"></div>
+                            </div>
+
+                            <!-- Paper Guide Bars -->
+                            <div class="absolute left-6 right-6 top-[105px] h-1 bg-gradient-to-b from-stone-300 to-stone-500 border border-stone-400 rounded-full z-20 opacity-90 shadow"></div>
+                            <div class="absolute left-10 right-10 top-[150px] h-2 bg-stone-800/80 border-t border-stone-900 rounded-full z-20 pointer-events-none"></div>
+                        </div>
+
+                        <!-- Carriage Scale -->
+                        <div class="w-[520px] h-4 bg-gradient-to-b from-stone-800 to-stone-950 border border-stone-900 rounded-b flex justify-between px-6 text-[8px] text-stone-500 font-mono tracking-widest z-20">
+                            <span>|...0...|...10...|...20...|...30...|...40...|...50...|...60...|</span>
+                        </div>
+                    </div>
+
+                    <!-- FRONT STATIC ELEMENTS -->
+                    <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-48 h-20 z-30 pointer-events-none flex flex-col justify-between items-center">
+                        <div id="no-paper-alert" class="px-3 py-1 bg-red-600 text-stone-100 text-xs font-bold rounded-lg shadow-lg animate-bounce transition-opacity">
+                            종이가 없습니다 (새 종이 넣기 클릭)
+                        </div>
+
+                        <!-- Metal Ribbon Guide & Card Guide (정중앙 1:1 활자 타격 조준점) -->
+                        <div class="relative w-24 h-14 flex justify-center">
+                            <!-- Metal Plate Guide with Card Center opening -->
+                            <div class="absolute bottom-1 w-10 h-10 bg-gradient-to-b from-stone-400 via-stone-300 to-stone-500 border border-stone-600 rounded shadow-md z-10 flex justify-center items-start">
+                                <!-- V-shaped card guide notch -->
+                                <div class="w-4 h-4 bg-stone-900 rounded-b-full border-x border-b border-stone-600"></div>
+                            </div>
+                            <!-- Left ribbon slot -->
+                            <div class="absolute left-1 bottom-0 w-2.5 h-11 bg-gradient-to-t from-stone-700 to-stone-400 rounded-sm border border-stone-600 shadow z-10"></div>
+                            <!-- Right ribbon slot -->
+                            <div class="absolute right-1 bottom-0 w-2.5 h-11 bg-gradient-to-t from-stone-700 to-stone-400 rounded-sm border border-stone-600 shadow z-10"></div>
+                            
+                            <!-- Ink ribbon strip -->
+                            <div id="ribbon-strip" class="absolute bottom-3 left-3 right-3 h-3 bg-stone-950 border-y border-stone-900 transition-all duration-300 z-10"></div>
+                            
+                            <!-- PHYSICAL METAL TYPEBAR HAMMER (정중앙 타격 팔대) -->
+                            <div id="typebar" class="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-[82px] bg-gradient-to-t from-stone-600 via-stone-300 to-stone-100 origin-bottom transform scale-y-0 opacity-0 z-40 shadow-xl border-x border-stone-400">
+                                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-6 bg-gradient-to-b from-stone-100 to-stone-400 border border-stone-300 rounded-sm shadow-md flex items-center justify-center">
+                                    <span class="text-[9px] text-stone-700 font-bold font-sans">韓</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Internal Mechanics (Spools) -->
+                <div class="w-full flex justify-between items-center px-12 bg-stone-950/60 py-1.5 rounded-xl border border-stone-900/80">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs text-stone-500">리본 축 L</span>
+                        <div class="relative w-10 h-10 bg-stone-900 rounded-full border border-stone-800 shadow-inner flex items-center justify-center">
+                            <div id="spool-l" class="w-8 h-8 rounded-full bg-gradient-to-br from-stone-800 to-black border border-stone-700 flex items-center justify-center transition-transform duration-100">
+                                <div class="w-3 h-3 rounded-full bg-stone-900 border border-stone-600"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center font-sans">
+                        <div class="text-teal-300 font-extrabold tracking-[0.25em] text-xs uppercase">二부식 타지기</div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="relative w-10 h-10 bg-stone-900 rounded-full border border-stone-800 shadow-inner flex items-center justify-center">
+                            <div id="spool-r" class="w-8 h-8 rounded-full bg-gradient-to-bl from-stone-800 to-black border border-stone-700 flex items-center justify-center transition-transform duration-100">
+                                <div class="w-3 h-3 rounded-full bg-stone-900 border border-stone-600"></div>
+                            </div>
+                        </div>
+                        <span class="text-xs text-stone-500">리본 축 R</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. FULL-SIZED TACTILE KEYBOARD -->
+        <div class="w-full bg-stone-950/95 p-3 md:p-5 rounded-2xl border border-stone-850 shadow-2xl flex flex-col gap-3">
+            <!-- Utility controls -->
+            <div class="flex flex-wrap justify-between items-center gap-2 border-b border-stone-800 pb-2">
+                <div class="flex space-x-2 font-sans">
+                    <button id="btn-backspace" class="px-4 py-2 bg-red-800 hover:bg-red-700 text-stone-100 rounded-lg text-xs font-bold flex items-center gap-1 shadow">
+                        ⌫ 한 자 지우기 (Backspace)
+                    </button>
+                    <button id="btn-latch-batchim" class="px-4 py-2 bg-stone-800 hover:bg-stone-700 text-teal-400 rounded-lg text-xs font-bold flex items-center gap-1">
+                        ⬇️ 받침 키 상태: <span id="batchim-status" class="text-red-500 font-bold">해제</span>
+                    </button>
+                </div>
+                <div id="desktop-tip" class="text-[11px] text-stone-400 bg-stone-900/80 px-2 py-1 rounded hidden font-sans">
+                    💡 컴퓨터 키보드로 타이핑하면 정중앙 가이드에 한 글자씩 딱 맞춰 실감나게 인쇄됩니다.
+                </div>
+                <div id="mobile-tip" class="text-[11px] text-teal-400 bg-stone-900/80 px-2 py-1 rounded hidden font-sans">
+                    📱 고화질 가상 원형 자판 활성화됨 (모바일 터치 대응)
+                </div>
+            </div>
+
+            <!-- Keyboard Layout Box -->
+            <div id="virtual-keyboard" class="flex flex-col gap-2 md:gap-3 items-center justify-center">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-stone-950 py-4 px-6 border-t border-stone-900 text-center text-xs text-stone-500 font-sans">
+        <p>© 1980 Typeit - 기계식 두벌식 지우는 타자기 시뮬레이터. Joseon100Years Font Fully Embedded.</p>
+    </footer>
+
+    <!-- MODAL: HELP & MANUAL -->
+    <div id="modal-manual" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 hidden backdrop-blur-sm font-sans">
+        <div class="bg-stone-900 border-2 border-stone-700 rounded-xl p-6 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl relative text-stone-300">
+            <button id="btn-manual-close" class="absolute top-4 right-4 text-stone-400 hover:text-stone-100 text-xl font-bold">×</button>
+            
+            <h3 class="text-xl font-bold text-teal-400 mb-4 border-b border-stone-800 pb-2 flex items-center gap-2">
+                📖 Typeit 기계식 교정 타자기 가이드
+            </h3>
+            
+            <div class="space-y-4 text-sm leading-relaxed">
+                <div>
+                    <h4 class="font-bold text-stone-100 mb-1">1. 종이 장착 (Paper Feed)</h4>
+                    <p class="text-stone-300">우측 상단의 **"새 종이 넣기"** 버튼을 눌러야 롤러에 백지가 급지되어 타이핑 준비가 완료됩니다.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-stone-100 mb-1">2. 조선일보 100주년 서체 & 지능형 오토마타</h4>
+                    <p class="text-stone-300">실시간 한글 2벌식 조합 장치가 탑재되어, 'ㅈㅗㄴㄱㅕㅇ' 같이 한 글자씩 흐트러지지 않고 **'존경'**과 같이 아름다운 한글 음절 단위로 완벽하게 묶여서 인쇄됩니다.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-stone-100 mb-1">3. 오타 자동 Lift-Off 테이프</h4>
+                    <p class="text-stone-300">오타가 날 경우 백스페이스를 누르면 교정 테이프가 작동되어 인쇄된 잉크를 테이프로 뜯어내듯 **물리적으로 말끔히 지우며** 역조합을 수행합니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: PAPER PREVIEW -->
+    <div id="modal-rip" class="fixed inset-0 bg-black/95 flex items-center justify-center p-4 z-50 hidden backdrop-blur-sm font-sans">
+        <div class="bg-stone-900 border-2 border-stone-700 rounded-xl p-6 max-w-xl w-full flex flex-col items-center shadow-2xl relative text-stone-300">
+            <button id="btn-rip-close" class="absolute top-4 right-4 text-stone-400 hover:text-stone-100 text-xl font-bold">×</button>
+            
+            <h3 class="text-xl font-bold text-teal-400 mb-2 flex items-center gap-2">
+                ✂️ 타자기에서 뜯어낸 소중한 기록
+            </h3>
+            <p class="text-xs text-stone-400 mb-4 text-center">조선100년 기념체로 타자된 기록이 한 장의 낭만적인 인쇄지로 탄생했습니다.</p>
+
+            <div class="w-full bg-stone-950 p-4 rounded-lg flex justify-center mb-5 border border-stone-800 max-h-[350px] overflow-y-auto">
+                <img id="rip-image-preview" class="max-w-xs shadow-2xl border border-stone-700 rounded bg-[#fdfaf2] h-auto" alt="타자 이미지 프리뷰" />
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-3 w-full">
+                <a id="download-link" href="#" class="px-5 py-2.5 bg-teal-600 hover:bg-teal-500 text-stone-900 font-bold rounded transition flex items-center gap-2 shadow-lg">
+                    💾 인쇄물 다운로드 (PNG)
+                </a>
+                <button id="btn-copy-text" class="px-5 py-2.5 bg-stone-700 hover:bg-stone-600 text-stone-100 rounded font-bold transition flex items-center gap-2 border border-stone-600">
+                    📋 일반 텍스트로 전체 복사
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. DEVICE DETECT ---
+        const isMobileDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+
+        // --- 2. HANGUL MAPS ---
+        const CHO_MAP = {
+            'ㄱ': 0, 'ㄲ': 1, 'ㄴ': 2, 'ㄷ': 3, 'ㄸ': 4, 'ㄹ': 5, 'ㅁ': 6, 'ㅂ': 7, 'ㅃ': 8,
+            'ㅅ': 9, 'ㅆ': 10, 'ㅇ': 11, 'ㅈ': 12, 'ㅉ': 13, 'ㅊ': 14, 'ㅋ': 15, 'ㅌ': 16,
+            'ㅍ': 17, 'ㅎ': 18
+        };
+        const JUNG_MAP = {
+            'ㅏ': 0, 'ㅐ': 1, 'ㅑ': 2, 'ㅒ': 3, 'ㅓ': 4, 'ㅔ': 5, 'ㅕ': 6, 'ㅖ': 7, 'ㅗ': 8,
+            'ㅘ': 9, 'ㅙ': 10, 'ㅚ': 11, 'ㅛ': 12, 'ㅜ': 13, 'ㅝ': 14, 'ㅞ': 15, 'ㅟ': 16,
+            'ㅠ': 17, 'ㅡ': 18, 'ㅢ': 19, 'ㅣ': 20
+        };
+        const JONG_MAP = {
+            '': 0, 'ㄱ': 1, 'ㄲ': 2, 'ㄳ': 3, 'ㄴ': 4, 'ㄵ': 5, 'ㄶ': 6, 'ㄷ': 7, 'ㄹ': 8,
+            'ㄺ': 9, 'ㄻ': 10, 'ㄼ': 11, 'ㄽ': 12, 'ㄾ': 13, 'ㄿ': 14, 'ㅀ': 15, 'ㅁ': 16,
+            'ㅂ': 17, 'ㅄ': 18, 'ㅅ': 19, 'ㅆ': 20, 'ㅇ': 21, 'ㅈ': 22, 'ㅊ': 23, 'ㅋ': 24,
+            'ㅌ': 25, 'ㅍ': 26, 'ㅎ': 27
+        };
+
+        const COMPLEX_JUNG = {
+            'ㅗㅏ': 'ㅘ', 'ㅗㅐ': 'ㅙ', 'ㅗㅣ': 'ㅚ',
+            'ㅜㅓ': 'ㅝ', 'ㅜㅔ': 'ㅞ', 'ㅜㅣ': 'ㅟ',
+            'ㅡㅣ': 'ㅢ'
+        };
+
+        const COMPLEX_JONG = {
+            'ㄱㅅ': 'ㄳ', 'ㄴㅈ': 'ㄵ', 'ㄴㅎ': 'ㄶ',
+            'ㄹㄱ': 'ㄺ', 'ㄹㅁ': 'ㄻ', 'ㄹㅂ': 'ㄼ', 'ㄹㅅ': 'ㄽ', 'ㄹㅌ': 'ㄾ', 'ㄹㅍ': 'ㄿ', 'ㄹㅎ': 'ㅀ',
+            'ㅂㅅ': 'ㅄ'
+        };
+
+        const SPLIT_JONG = {
+            'ㄳ': ['ㄱ', 'ㅅ'], 'ㄵ': ['ㄴ', 'ㅈ'], 'ㄶ': ['ㄴ', 'ㅎ'],
+            'ㄺ': ['ㄹ', 'ㄱ'], 'ㄻ': ['ㄹ', 'ㅁ'], 'ㄼ': ['ㄹ', 'ㅂ'], 'ㄽ': ['ㄹ', 'ㅅ'],
+            'ㄾ': ['ㄹ', 'ㅌ'], 'ㄿ': ['ㄹ', 'ㅍ'], 'ㅀ': ['ㄹ', 'ㅎ'], 'ㅄ': ['ㅂ', 'ㅅ']
+        };
+
+        const ALLOWED_JONG = new Set([
+            'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+        ]);
+
+        const CONSONANTS = new Set([
+            'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ',
+            'ㄳ', 'ㄵ', 'ㄶ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅄ'
+        ]);
+        
+        const VOWELS = new Set([
+            'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅛ', 'ㅜ', 'ㅠ', 'ㅡ', 'ㅣ',
+            'ㅘ', 'ㅙ', 'ㅚ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅢ'
+        ]);
+
+        // 물리 하드웨어 키스캔코드 두벌식 매핑 엔진
+        const CODE_TO_KOR = {
+            'KeyQ': 'ㅂ', 'KeyW': 'ㅈ', 'KeyE': 'ㄷ', 'KeyR': 'ㄱ', 'KeyT': 'ㅅ', 'KeyY': 'ㅛ', 'KeyU': 'ㅕ', 'KeyI': 'ㅑ', 'KeyO': 'ㅐ', 'KeyP': 'ㅔ',
+            'KeyA': 'ㅁ', 'KeyS': 'ㄴ', 'KeyD': 'ㅇ', 'KeyF': 'ㄹ', 'KeyG': 'ㅎ', 'KeyH': 'ㅗ', 'KeyJ': 'ㅓ', 'KeyK': 'ㅏ', 'KeyL': 'ㅣ', 'Semicolon': 'ㄶ',
+            'KeyZ': 'ㅋ', 'KeyX': 'ㅌ', 'KeyC': 'ㅊ', 'KeyV': 'ㅍ', 'KeyB': 'ㅠ', 'KeyN': 'ㅜ', 'KeyM': 'ㅡ', 'Comma': 'ㅄ', 'Period': '·', 'Slash': '?',
+            'Digit1': '1', 'Digit2': '2', 'Digit3': '3', 'Digit4': '4', 'Digit5': '5', 'Digit6': '6', 'Digit7': '7', 'Digit8': '8', 'Digit9': '9', 'Digit0': '0',
+            'Minus': '-', 'Equal': '+'
+        };
+        const CODE_TO_KOR_SHIFT = {
+            'KeyQ': 'ㅃ', 'KeyW': 'ㅉ', 'KeyE': 'ㄸ', 'KeyR': 'ㄲ', 'KeyT': 'ㅆ', 'KeyY': 'ㅛ', 'KeyU': 'ㅕ', 'KeyI': 'ㅑ', 'KeyO': 'ㅒ', 'KeyP': 'ㅖ',
+            'KeyA': 'ㅁ', 'KeyS': 'ㄴ', 'KeyD': 'ㅇ', 'KeyF': 'ㄹ', 'KeyG': 'ㅎ', 'KeyH': 'ㅗ', 'KeyJ': 'ㅓ', 'KeyK': 'ㅏ', 'KeyL': 'ㅣ', 'Semicolon': ':',
+            'KeyZ': 'ㅋ', 'KeyX': 'ㅌ', 'KeyC': 'ㅊ', 'KeyV': 'ㅍ', 'KeyB': 'ㅠ', 'KeyN': 'ㅜ', 'KeyM': 'ㅡ', 'Comma': ',', 'Period': '.', 'Slash': '?'
+        };
+
+        const KEY_TO_KOR = {
+            'q':'ㅂ', 'w':'ㅈ', 'e':'ㄷ', 'r':'ㄱ', 't':'ㅅ', 'y':'ㅛ', 'u':'ㅕ', 'i':'ㅑ', 'o':'ㅐ', 'p':'ㅔ',
+            'a':'ㅁ', 's':'ㄴ', 'd':'ㅇ', 'f':'ㄹ', 'g':'ㅎ', 'h':'ㅗ', 'j':'ㅓ', 'k':'ㅏ', 'l':'ㅣ',
+            'z':'ㅋ', 'x':'ㅌ', 'c':'ㅊ', 'v':'ㅍ', 'b':'ㅠ', 'n':'ㅜ', 'm':'ㅡ'
+        };
+        const KEY_TO_KOR_SHIFT = {
+            'q':'ㅃ', 'w':'ㅉ', 'e':'ㄸ', 'r':'ㄲ', 't':'ㅆ', 'y':'ㅛ', 'u':'ㅕ', 'i':'ㅑ', 'o':'ㅒ', 'p':'ㅖ',
+            'a':'ㅁ', 's':'ㄴ', 'd':'ㅇ', 'f':'ㄹ', 'g':'ㅎ', 'h':'ㅗ', 'j':'ㅓ', 'k':'ㅏ', 'l':'ㅣ',
+            'z':'ㅋ', 'x':'ㅌ', 'c':'ㅊ', 'v':'ㅍ', 'b':'ㅠ', 'n':'ㅜ', 'm':'ㅡ'
+        };
+
+        // 가상 키보드 고증 배치도
+        const VISUAL_KEYBOARD = [
+            [
+                { primary: "1", shift: "!", type: "normal" },
+                { primary: "2", shift: "\"", type: "normal" },
+                { primary: "3", shift: "₩", type: "normal" },
+                { primary: "4", shift: "$", type: "normal" },
+                { primary: "5", shift: "%", type: "normal" },
+                { primary: "6", shift: "/", type: "normal" },
+                { primary: "7", shift: ":", type: "normal" },
+                { primary: "8", shift: "(", type: "normal" },
+                { primary: "9", shift: ")", type: "normal" },
+                { primary: "0", shift: "-", type: "normal" },
+                { primary: "ㄲ", shift: "*", type: "normal" },
+                { primary: "ㄻ", shift: "+", type: "normal" }
+            ],
+            [
+                { primary: "⇹", shift: "⇹", type: "normal" }, 
+                { primary: "ㅂ", shift: "ㅃ", type: "normal" },
+                { primary: "ㅈ", shift: "ㅉ", type: "normal" },
+                { primary: "ㄷ", shift: "ㄸ", type: "normal" },
+                { primary: "ㄱ", shift: "ㄲ", type: "normal" },
+                { primary: "ㅅ", shift: "ㅆ", type: "normal" },
+                { primary: "ㅛ", shift: "ㅛ", type: "normal" },
+                { primary: "ㅕ", shift: "ㅕ", type: "normal" },
+                { primary: "ㅑ", shift: "ㅑ", type: "normal" },
+                { primary: "ㅐ", shift: "ㅒ", type: "normal" },
+                { primary: "ㅔ", shift: "ㅖ", type: "normal" },
+                { primary: "ㄺ", shift: "?", type: "normal" },
+                { primary: "⟵", shift: "⟵", type: "special" } 
+            ],
+            [
+                { primary: "🔒", shift: "🔒", type: "special" }, 
+                { primary: "ㅁ", shift: "ㅁ", type: "normal" },
+                { primary: "ㄴ", shift: "ㄴ", type: "normal" },
+                { primary: "ㅇ", shift: "ㅇ", type: "normal" },
+                { primary: "ㄹ", shift: "ㄹ", type: "normal" },
+                { primary: "ㅎ", shift: "ㅎ", type: "normal" },
+                { primary: "ㅗ", shift: "ㅗ", type: "normal" },
+                { primary: "ㅓ", shift: "ㅓ", type: "normal" },
+                { primary: "ㅏ", shift: "ㅏ", type: "normal" },
+                { primary: "ㅣ", shift: "ㅣ", type: "normal" },
+                { primary: "ㄶ", shift: ";", type: "normal" },
+                { primary: "ㅆ", shift: "\"", type: "normal" },
+                { primary: "TAB", shift: "TAB", type: "red-tab" } 
+            ],
+            [
+                { primary: "받침", shift: "받침", type: "shift" }, 
+                { primary: "ㅋ", shift: "ㅋ", type: "normal" },
+                { primary: "ㅌ", shift: "ㅌ", type: "normal" },
+                { primary: "ㅊ", shift: "ㅊ", type: "normal" },
+                { primary: "ㅍ", shift: "ㅍ", type: "normal" },
+                { primary: "ㅠ", shift: "ㅠ", type: "normal" },
+                { primary: "ㅜ", shift: "ㅜ", type: "normal" },
+                { primary: "ㅡ", shift: "ㅡ", type: "normal" },
+                { primary: "ㅄ", shift: ",", type: "normal" },
+                { primary: "·", shift: "ㅡ", type: "normal" },
+                { primary: "?", shift: ".", type: "normal" },
+                { primary: "받침", shift: "받침", type: "shift" } 
+            ]
+        ];
+
+        // --- 3. SYSTEM STATE VARIABLES ---
+        let ribbonColor = 'black';
+        let paperColor = 'white'; // 'white' | 'cream' | 'yellow'
+        let isPaperLoaded = false;
+        let isBatchimActive = false;
+        let documentLines = [];
+        let currentLineY = 0;
+        let carriageX = 0;
+        let cho = '';
+        let jung = '';
+        let jong = '';
+        let paperScrollY = 120; 
+        let isSoundEnabled = true;
+
+        // ★ [자간 Spacing 교정] 자간 크기를 '11px'로 조율 및 영구 고정 상태로 변경 완료 ★
+        const charWidth = 11; 
+        const maxCarriageX = 30; // 11px 기준 줄당 30자 고정 배정
+
+        const scaleFactor = 2;
+        const canvasWidth = 440;
+        const canvasHeight = 600;
+        const lineHeight = 26; 
+
+        // DOM Holders
+        let canvas, ctx, paperContainer, carriage, typebar, spoolL, spoolR, ribbonStrip, paperAlert, batchimStatus;
+
+        // --- 4. AUDIO GENERATOR ---
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function createNoiseBuffer(duration = 0.08) {
+            const bufferSize = audioCtx.sampleRate * duration;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+            return buffer;
+        }
+
+        function playTypewriterClack(isSpace = false) {
+            if (!isSoundEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = createNoiseBuffer(isSpace ? 0.06 : 0.04);
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(isSpace ? 650 : 1350, now);
+            filter.Q.setValueAtTime(isSpace ? 1.8 : 4.0, now);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(isSpace ? 0.22 : 0.45, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + (isSpace ? 0.05 : 0.035));
+
+            const osc = audioCtx.createOscillator();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(isSpace ? 140 : 580, now);
+            
+            const oscGain = audioCtx.createGain();
+            oscGain.gain.setValueAtTime(isSpace ? 0.06 : 0.09, now);
+            oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.connect(oscGain);
+            oscGain.connect(audioCtx.destination);
+
+            noise.start(now);
+            noise.stop(now + 0.07);
+            osc.start(now);
+            osc.stop(now + 0.04);
+        }
+
+        function playCorrectionLiftSound() {
+            if (!isSoundEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = createNoiseBuffer(0.08);
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(450, now);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.4, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+            noise.start(now);
+            noise.stop(now + 0.09);
+
+            setTimeout(() => {
+                const peelNow = audioCtx.currentTime;
+                const peelNoise = audioCtx.createBufferSource();
+                peelNoise.buffer = createNoiseBuffer(0.12);
+
+                const peelFilter = audioCtx.createBiquadFilter();
+                peelFilter.type = 'bandpass';
+                peelFilter.frequency.setValueAtTime(2500, peelNow);
+                peelFilter.frequency.exponentialRampToValueAtTime(400, peelNow + 0.1);
+                peelFilter.Q.setValueAtTime(6.0, peelNow);
+
+                const peelGain = audioCtx.createGain();
+                peelGain.gain.setValueAtTime(0.2, peelNow);
+                peelGain.gain.exponentialRampToValueAtTime(0.001, peelNow + 0.12);
+
+                peelNoise.connect(peelFilter);
+                peelFilter.connect(peelGain);
+                peelGain.connect(audioCtx.destination);
+                peelNoise.start(peelNow);
+                peelNoise.stop(peelNow + 0.13);
+            }, 30);
+        }
+
+        function playMetalStrike() {
+            if (!isSoundEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+
+            const osc = audioCtx.createOscillator();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(320, now);
+            osc.frequency.exponentialRampToValueAtTime(60, now + 0.1);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(now);
+            osc.stop(now + 0.1);
+        }
+
+        function playBellRing() {
+            if (!isSoundEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+
+            const osc1 = audioCtx.createOscillator();
+            osc1.type = 'sine';
+            osc1.frequency.setValueAtTime(2600, now);
+
+            const osc2 = audioCtx.createOscillator();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(5200, now);
+
+            const gain1 = audioCtx.createGain();
+            gain1.gain.setValueAtTime(0.15, now);
+            gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+
+            const gain2 = audioCtx.createGain();
+            gain2.gain.setValueAtTime(0.06, now);
+            gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+
+            osc1.connect(gain1);
+            gain1.connect(audioCtx.destination);
+            
+            osc2.connect(gain2);
+            gain2.connect(audioCtx.destination);
+
+            osc1.start(now);
+            osc2.start(now);
+            osc1.stop(now + 0.65);
+            osc2.stop(now + 0.3);
+        }
+
+        function playReturnSlide() {
+            if (!isSoundEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+            const duration = 0.4;
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = createNoiseBuffer(duration);
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(900, now);
+            filter.frequency.exponentialRampToValueAtTime(250, now + duration);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+            for (let i = 0; i < 5; i++) {
+                const clickTime = now + (i * 0.08);
+                const click = audioCtx.createOscillator();
+                click.type = 'triangle';
+                click.frequency.setValueAtTime(200, clickTime);
+                const clickGain = audioCtx.createGain();
+                clickGain.gain.setValueAtTime(0.1, clickTime);
+                clickGain.gain.exponentialRampToValueAtTime(0.001, clickTime + 0.02);
+                click.connect(clickGain);
+                clickGain.connect(audioCtx.destination);
+                click.start(clickTime);
+                click.stop(clickTime + 0.02);
+            }
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            noise.start(now);
+            noise.stop(now + duration);
+        }
+
+        function playPaperScroll() {
+            if (!isSoundEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = createNoiseBuffer(0.2);
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(800, now);
+            filter.Q.setValueAtTime(2, now);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.12, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            noise.start(now);
+            noise.stop(now + 0.2);
+        }
+
+        function playPaperRip() {
+            if (!isSoundEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+            const duration = 0.45;
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = createNoiseBuffer(duration);
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(1100, now);
+            filter.frequency.exponentialRampToValueAtTime(350, now + duration);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.35, now);
+            gain.gain.linearRampToValueAtTime(0.08, now + 0.15);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            noise.start(now);
+            noise.stop(now + duration);
+        }
+
+        // --- 5. CANVAS GRID RENDERER ---
+        function drawPaper() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+            if (!isPaperLoaded) return;
+
+            // Margin line
+            ctx.strokeStyle = 'rgba(230, 80, 80, 0.12)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(45, 0);
+            ctx.lineTo(45, canvasHeight);
+            ctx.stroke();
+
+            // Writing gridlines
+            ctx.strokeStyle = 'rgba(80, 120, 230, 0.05)';
+            ctx.beginPath();
+            for (let y = 60; y < canvasHeight; y += lineHeight) {
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvasWidth, y);
+            }
+            ctx.stroke();
+
+            // Render stamps (14px 아담한 규격 및 조선100년 기념체 반영)
+            for (let y = 0; y < documentLines.length; y++) {
+                const line = documentLines[y];
+                if (!line) continue;
+
+                for (let x = 0; x < line.length; x++) {
+                    const cell = line[x];
+                    if (!cell || !cell.char) continue;
+
+                    // 여백(50px)에서 출발하는 물리적 정밀 중앙정렬 픽셀 포지셔닝
+                    const drawX = 50 + (x * charWidth) + (charWidth / 2);
+                    const drawY = 80 + (y * lineHeight);
+
+                    if (drawY > canvasHeight + 50 || drawY < -50) continue;
+
+                    ctx.save();
+                    ctx.translate(drawX, drawY);
+
+                    const ink = cell.color === 'red' ? '#9d1c1c' : '#1c1c1c';
+                    ctx.fillStyle = ink;
+                    ctx.globalAlpha = 0.95; 
+
+                    ctx.font = "normal 14px 'Joseon100Years', serif";
+                    ctx.textAlign = 'center'; 
+                    
+                    ctx.fillText(cell.char, 0, 0);
+                    ctx.restore();
+                }
+            }
+        }
+
+        // --- 6. MECHANICAL CARRIAGE CENTER-ALIGN MOTION ENGINE ---
+        function updateCarriage() {
+            if (carriage) {
+                // 11px 자간 기준, 정중앙 조준 정렬식 캐리지 동적 타격선 포지셔닝
+                const targetX = 170 - (carriageX * charWidth) - (charWidth / 2);
+                carriage.style.transform = `translateX(${targetX}px)`;
+            }
+        }
+
+        function triggerStrike() {
+            if (typebar) {
+                typebar.classList.remove('typebar-striking');
+                void typebar.offsetWidth; // trigger reflow
+                typebar.classList.add('typebar-striking');
+            }
+
+            // Spools rotation animation
+            const deg = ribbonColor === 'red' ? 10 : -10;
+            const currentL = parseInt(spoolL.style.transform.replace(/[^\d-]/g, '')) || 0;
+            const currentR = parseInt(spoolR.style.transform.replace(/[^\d-]/g, '')) || 0;
+            spoolL.style.transform = `rotate(${currentL + deg}deg)`;
+            spoolR.style.transform = `rotate(${currentR - deg}deg)`;
+        }
+
+        function updateCurrentCell() {
+            if (!isPaperLoaded) return;
+            const combinedChar = makeSyllable(cho, jung, jong);
+            
+            if (!documentLines[currentLineY]) {
+                documentLines[currentLineY] = [];
+            }
+            
+            documentLines[currentLineY][carriageX] = {
+                char: combinedChar,
+                cho: cho,
+                jung: jung,
+                jong: jong,
+                color: ribbonColor,
+                offsetX: 0,
+                offsetY: 0,
+                angle: 0,
+                opacity: 1.0,
+                scale: 1.0
+            };
+            
+            updateCarriage();
+            drawPaper();
+        }
+
+        function commitSyllable() {
+            if (cho || jung || jong) {
+                carriageX++;
+                cho = '';
+                jung = '';
+                jong = '';
+                updateCarriage();
+            }
+        }
+
+        // --- 7. AUTOMATON PROCESSING ---
+        function inputJamo(jamo) {
+            if (!isPaperLoaded) {
+                playMetalStrike();
+                showToast("먼저 새 종이를 장착해 주세요!", "📄");
+                return;
+            }
+
+            if (carriageX >= maxCarriageX) {
+                playBellRing();
+                playMetalStrike();
+                showToast("종이 한 행의 끝입니다. 다음 줄로 넘어가세요!", "🔔");
+                return;
+            }
+
+            const isConsonant = CONSONANTS.has(jamo);
+            const isVowel = VOWELS.has(jamo);
+
+            if (!isConsonant && !isVowel) {
+                commitSyllable();
+                processDirectStamp(jamo);
+                return;
+            }
+
+            if (!documentLines[currentLineY]) {
+                documentLines[currentLineY] = [];
+            }
+
+            if (isConsonant) {
+                if (cho === '') {
+                    cho = jamo;
+                    updateCurrentCell();
+                    triggerStrike();
+                    playTypewriterClack(false);
+                }
+                else if (cho !== '' && jung === '') {
+                    commitSyllable();
+                    cho = jamo;
+                    updateCurrentCell();
+                    triggerStrike();
+                    playTypewriterClack(false);
+                }
+                else if (cho !== '' && jung !== '' && jong === '') {
+                    if (ALLOWED_JONG.has(jamo)) {
+                        jong = jamo;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    } else {
+                        commitSyllable();
+                        cho = jamo;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    }
+                }
+                else if (cho !== '' && jung !== '' && jong !== '') {
+                    const combinedJong = COMPLEX_JONG[jong + jamo];
+                    if (combinedJong) {
+                        jong = combinedJong;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    } else {
+                        commitSyllable();
+                        cho = jamo;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    }
+                }
+            } 
+            else if (isVowel) {
+                if (cho === '' && jung === '') {
+                    jung = jamo;
+                    updateCurrentCell();
+                    triggerStrike();
+                    playTypewriterClack(false);
+                }
+                else if (cho !== '' && jung === '') {
+                    jung = jamo;
+                    updateCurrentCell();
+                    triggerStrike();
+                    playTypewriterClack(false);
+                }
+                else if (cho !== '' && jung !== '' && jong === '') {
+                    const combinedJung = COMPLEX_JUNG[jung + jamo];
+                    if (combinedJung) {
+                        jung = combinedJung;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    } else {
+                        commitSyllable();
+                        jung = jamo;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    }
+                }
+                else if (cho !== '' && jung !== '' && jong !== '') {
+                    if (SPLIT_JONG[jong]) {
+                        const parts = SPLIT_JONG[jong];
+                        const oldJong = parts[0];
+                        const carryCho = parts[1];
+                        
+                        jong = oldJong;
+                        updateCurrentCell();
+                        
+                        commitSyllable();
+                        cho = carryCho;
+                        jung = jamo;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    } else {
+                        const carryCho = jong;
+                        
+                        jong = '';
+                        updateCurrentCell();
+                        
+                        commitSyllable();
+                        cho = carryCho;
+                        jung = jamo;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    }
+                }
+            }
+
+            if (carriageX === maxCarriageX - 3) {
+                playBellRing();
+            }
+        }
+
+        function processDirectStamp(char) {
+            commitSyllable();
+            
+            if (!documentLines[currentLineY]) {
+                documentLines[currentLineY] = [];
+            }
+            
+            documentLines[currentLineY][carriageX] = {
+                char: char,
+                cho: '',
+                jung: '',
+                jong: '',
+                color: ribbonColor,
+                offsetX: 0,
+                offsetY: 0,
+                angle: 0,
+                opacity: 1.0,
+                scale: 1.0
+            };
+            
+            carriageX++;
+            updateCarriage();
+            triggerStrike();
+            playTypewriterClack(false);
+            drawPaper();
+        }
+
+        // Lift-Off correction
+        function moveBackAndErase() {
+            if (!isPaperLoaded) {
+                playMetalStrike();
+                return;
+            }
+
+            if (cho || jung || jong) {
+                if (jong) {
+                    let reverted = false;
+                    for (let key in COMPLEX_JONG) {
+                        if (COMPLEX_JONG[key] === jong) {
+                            jong = key[0];
+                            reverted = true;
+                            break;
+                        }
+                    }
+                    if (!reverted) {
+                        jong = '';
+                    }
+                    updateCurrentCell();
+                    playCorrectionLiftSound();
+                    triggerStrike();
+                } else if (jung) {
+                    let reverted = false;
+                    for (let key in COMPLEX_JUNG) {
+                        if (COMPLEX_JUNG[key] === jung) {
+                            jung = key[0];
+                            reverted = true;
+                            break;
+                        }
+                    }
+                    if (!reverted) {
+                        jung = '';
+                    }
+                    if (cho || jung) {
+                        updateCurrentCell();
+                    } else {
+                        if (documentLines[currentLineY]) {
+                            delete documentLines[currentLineY][carriageX];
+                        }
+                        drawPaper();
+                    }
+                    playCorrectionLiftSound();
+                    triggerStrike();
+                } else if (cho) {
+                    cho = '';
+                    if (documentLines[currentLineY]) {
+                        delete documentLines[currentLineY][carriageX];
+                    }
+                    playCorrectionLiftSound();
+                    triggerStrike();
+                    drawPaper();
+                }
+            }
+            else {
+                if (carriageX > 0) {
+                    carriageX--;
+                    updateCarriage();
+
+                    if (documentLines[currentLineY] && documentLines[currentLineY][carriageX]) {
+                        const cell = documentLines[currentLineY][carriageX];
+                        if (cell && cell.char) {
+                            cho = cell.cho || '';
+                            jung = cell.jung || '';
+                            jong = cell.jong || '';
+                            
+                            delete documentLines[currentLineY][carriageX];
+                            moveBackAndErase();
+                        } else {
+                            playTypewriterClack(true);
+                        }
+                    } else {
+                        playTypewriterClack(true);
+                    }
+                } else {
+                    playMetalStrike();
+                }
+            }
+        }
+
+        function performReturn() {
+            if (!isPaperLoaded) {
+                playMetalStrike();
+                return;
+            }
+
+            commitSyllable();
+            playReturnSlide();
+
+            const lever = document.getElementById('return-lever');
+            lever.style.transform = 'rotate(-30deg)';
+            setTimeout(() => {
+                lever.style.transform = 'rotate(0deg)';
+            }, 250);
+
+            currentLineY++;
+            carriageX = 0;
+            updateCarriage();
+
+            paperScrollY -= lineHeight;
+            if (paperScrollY < -240) paperScrollY = -240; 
+            paperContainer.style.transform = `translateY(${paperScrollY}px)`;
+        }
+
+        // --- 8. PAPER MANIPULATION ---
+        function loadPaper() {
+            if (isPaperLoaded) return;
+            playPaperScroll();
+            isPaperLoaded = true;
+            paperScrollY = 120; 
+            carriageX = 0;
+            currentLineY = 0;
+            documentLines = [];
+            cho = ''; jung = ''; jong = '';
+
+            paperContainer.style.transform = `translateY(${paperScrollY}px)`;
+            paperContainer.style.opacity = '1';
+            
+            if (paperAlert) {
+                paperAlert.classList.add('opacity-0');
+            }
+
+            applyPaperStyle();
+            updateCarriage();
+            setTimeout(() => drawPaper(), 120);
+            showToast("종이를 롤러 기어에 장착했습니다.", "📄");
+        }
+
+        function applyPaperStyle() {
+            if (!paperContainer) return;
+            if (paperColor === 'yellow') {
+                paperContainer.style.backgroundColor = '#ffff00'; // 선명한 노란색
+            } else if (paperColor === 'cream') {
+                paperContainer.style.backgroundColor = '#fdf3de'; // 연한 베이지 크림색
+            } else {
+                paperContainer.style.backgroundColor = '#ffffff'; // 하얀색 종이
+            }
+        }
+
+        function ripPaper() {
+            if (!isPaperLoaded) return;
+            commitSyllable();
+            playPaperRip();
+
+            const dataUrl = canvas.toDataURL("image/png");
+            document.getElementById('rip-image-preview').src = dataUrl;
+            document.getElementById('download-link').href = dataUrl;
+            document.getElementById('download-link').download = `Typeit_기록_${new Date().toISOString().slice(0,10)}.png`;
+
+            document.getElementById('modal-rip').classList.remove('hidden');
+
+            isPaperLoaded = false;
+            paperContainer.style.opacity = '0';
+            paperContainer.style.transform = `translateY(400px)`;
+            if (paperAlert) {
+                paperAlert.classList.remove('opacity-0');
+            }
+            drawPaper();
+        }
+
+        function toggleBatchim() {
+            isBatchimActive = !isBatchimActive;
+            if (batchimStatus) {
+                batchimStatus.textContent = isBatchimActive ? '받침 입력 활성' : '해제';
+                batchimStatus.className = isBatchimActive ? 'text-emerald-400 font-bold' : 'text-red-500';
+            }
+            playTypewriterClack(true);
+        }
+
+        // --- 9. RENDER TACTILE VIRTUAL KEYPAD ---
+        function renderKeyboard() {
+            const container = document.getElementById('virtual-keyboard');
+            if (!container) return;
+            container.innerHTML = '';
+
+            VISUAL_KEYBOARD.forEach(row => {
+                const rowEl = document.createElement('div');
+                rowEl.className = "flex justify-center gap-1.5 md:gap-3 w-full";
+
+                row.forEach(key => {
+                    const keyBtn = document.createElement('button');
+                    
+                    let sizeClass = "key-size-normal";
+                    if (key.type === 'shift') {
+                        sizeClass = "key-size-shift"; 
+                    } else if (key.type === 'red-tab' || key.primary === '⟵') {
+                        sizeClass = "key-size-special"; 
+                    }
+
+                    keyBtn.className = `vintage-key ${sizeClass} select-none`;
+                    
+                    if (key.type === 'red-tab') {
+                        keyBtn.classList.add('vintage-key-red');
+                    }
+
+                    keyBtn.dataset.char = key.primary.toLowerCase();
+                    keyBtn.dataset.shift = key.shift.toLowerCase();
+
+                    if (key.primary === key.shift) {
+                        keyBtn.innerHTML = `<span class="text-[12px] md:text-lg font-bold">${key.primary}</span>`;
+                    } else {
+                        keyBtn.innerHTML = `
+                            <span class="text-[8px] md:text-[10px] text-stone-400 font-sans -mt-1 leading-none">${key.shift}</span>
+                            <span class="text-[12px] md:text-lg font-bold -mt-0.5 leading-none">${key.primary}</span>
+                        `;
+                    }
+
+                    // Touch/Mouse unified handler
+                    keyBtn.addEventListener('pointerdown', (e) => {
+                        e.preventDefault();
+                        keyBtn.classList.add('pressed');
+                        setTimeout(() => keyBtn.classList.remove('pressed'), 100);
+
+                        if (key.primary === '받침') {
+                            toggleBatchim();
+                        } else if (key.primary === '⟵') {
+                            moveBackAndErase();
+                        } else if (key.primary === 'TAB') {
+                            if (isPaperLoaded && carriageX < maxCarriageX - 4) {
+                                commitSyllable();
+                                carriageX += 4;
+                                updateCarriage();
+                                playTypewriterClack(true);
+                            } else {
+                                playMetalStrike();
+                            }
+                        } else if (key.primary === '🔒') {
+                            playTypewriterClack(true);
+                        } else {
+                            const actualChar = isBatchimActive ? key.shift : key.primary;
+                            inputJamo(actualChar);
+                        }
+                    });
+
+                    rowEl.appendChild(keyBtn);
+                });
+                container.appendChild(rowEl);
+            });
+
+            // Spacebar block
+            const spaceRow = document.createElement('div');
+            spaceRow.className = "flex justify-center gap-2.5 mt-1.5 w-full";
+
+            const spaceBtn = document.createElement('button');
+            spaceBtn.className = "vintage-spacebar w-[60%] h-11 md:h-14 cursor-pointer";
+            spaceBtn.addEventListener('pointerdown', (e) => {
+                e.preventDefault();
+                spaceBtn.classList.add('pressed');
+                setTimeout(() => spaceBtn.classList.remove('pressed'), 100);
+
+                if (isPaperLoaded && carriageX < maxCarriageX) {
+                    commitSyllable();
+                    carriageX++;
+                    updateCarriage();
+                    playTypewriterClack(true);
+                } else {
+                    playMetalStrike();
+                }
+            });
+
+            const repeatBtn = document.createElement('button');
+            repeatBtn.className = "vintage-key-red w-[18%] h-11 md:h-14 font-bold cursor-pointer flex items-center justify-center rounded-2xl shadow";
+            repeatBtn.innerHTML = `<span class="text-sm md:text-xl">⟶</span>`;
+            repeatBtn.addEventListener('pointerdown', (e) => {
+                e.preventDefault();
+                repeatBtn.classList.add('pressed');
+                setTimeout(() => repeatBtn.classList.remove('pressed'), 100);
+
+                if (isPaperLoaded && carriageX < maxCarriageX - 2) {
+                    commitSyllable();
+                    carriageX += 2;
+                    updateCarriage();
+                    playTypewriterClack(true);
+                } else {
+                    playMetalStrike();
+                }
+            });
+
+            spaceRow.appendChild(spaceBtn);
+            spaceRow.appendChild(repeatBtn);
+            container.appendChild(spaceRow);
+        }
+
+        // --- 10. PHYSICAL HARDWARE KEYBOARD EVENT INTERCEPTOR ---
+        function handlePhysicalKeyDown(e) {
+            if (!document.getElementById('modal-rip').classList.contains('hidden') || 
+                !document.getElementById('modal-manual').classList.contains('hidden')) {
+                return;
+            }
+
+            if (e.key === ' ' || e.key === 'Backspace' || e.key === 'Enter') {
+                e.preventDefault();
+            }
+
+            if (e.key === 'Shift') {
+                isBatchimActive = true;
+                if (batchimStatus) {
+                    batchimStatus.textContent = '받침 입력 활성';
+                    batchimStatus.className = 'text-emerald-400 font-bold';
+                }
+                return;
+            }
+
+            if (e.key === 'Backspace') {
+                moveBackAndErase();
+                return;
+            }
+
+            if (e.key === 'Enter') {
+                performReturn();
+                return;
+            }
+
+            if (e.key === ' ') {
+                commitSyllable();
+                if (isPaperLoaded && carriageX < maxCarriageX) {
+                    if (!documentLines[currentLineY]) {
+                        documentLines[currentLineY] = [];
+                    }
+                    documentLines[currentLineY][carriageX] = { char: ' ' };
+                    carriageX++;
+                    updateCarriage();
+                    playTypewriterClack(true);
+                } else {
+                    playMetalStrike();
+                }
+                return;
+            }
+
+            if (CONSONANTS.has(e.key) || VOWELS.has(e.key)) {
+                inputJamo(e.key);
+                animateKeycapPressed(e.key);
+                return;
+            }
+
+            let kChar = null;
+            if (isBatchimActive) {
+                kChar = CODE_TO_KOR_SHIFT[e.code] || KEY_TO_KOR_SHIFT[e.key.toLowerCase()];
+            } else {
+                kChar = CODE_TO_KOR[e.code] || KEY_TO_KOR[e.key.toLowerCase()];
+            }
+
+            if (kChar) {
+                inputJamo(kChar);
+                animateKeycapPressed(kChar);
+            }
+        }
+
+        function animateKeycapPressed(char) {
+            const keys = document.querySelectorAll('.vintage-key');
+            keys.forEach(k => {
+                if (k.dataset.char === char.toLowerCase() || k.dataset.shift === char.toLowerCase()) {
+                    k.classList.add('pressed');
+                    setTimeout(() => k.classList.remove('pressed'), 100);
+                }
+            });
+        }
+
+        function handlePhysicalKeyUp(e) {
+            if (e.key === 'Shift') {
+                isBatchimActive = false;
+                if (batchimStatus) {
+                    batchimStatus.textContent = '해제';
+                    batchimStatus.className = 'text-red-500';
+                }
+            }
+        }
+
+        // --- 11. SCALING ENGINE ---
+        function adjustMechanicalScaling() {
+            const wrapper = document.getElementById('carriage-scale-wrapper');
+            const target = document.getElementById('typewriter-top-chassis');
+            if (!wrapper || !target) return;
+            const windowWidth = window.innerWidth;
+            const targetWidth = 896; 
+
+            if (windowWidth < targetWidth + 24) {
+                const scale = (windowWidth - 16) / targetWidth;
+                wrapper.style.transform = `scale(${scale})`;
+                wrapper.style.height = `${target.offsetHeight * scale}px`;
+            } else {
+                wrapper.style.transform = 'none';
+                wrapper.style.height = 'auto';
+            }
+        }
+
+        window.addEventListener('resize', adjustMechanicalScaling);
+
+        // --- 12. HANGUL AUTOMATON CONSOLIDATOR ---
+        function makeSyllable(c, v, f) {
+            if (!c && !v && !f) return '';
+            if (c && !v) return c; 
+            if (!c && v) return v; 
+            
+            const choIdx = CHO_MAP[c];
+            const jungIdx = JUNG_MAP[v];
+            const jongIdx = JONG_MAP[f || ''];
+
+            if (choIdx !== undefined && jungIdx !== undefined && jongIdx !== undefined) {
+                return String.fromCharCode(0xAC00 + (choIdx * 21 * 28) + (jungIdx * 28) + jongIdx);
+            }
+            return c + (v || '') + (f || '');
+        }
+
+        // --- 13. TOAST NOTIFIER ---
+        function showToast(text, icon = "✨") {
+            const toast = document.getElementById('custom-toast');
+            const toastText = document.getElementById('toast-text');
+            const toastIcon = document.getElementById('toast-icon');
+            if (!toast) return;
+
+            toastText.textContent = text;
+            toastIcon.textContent = icon;
+
+            toast.classList.add('show');
+            toast.style.pointerEvents = 'auto';
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.style.pointerEvents = 'none';
+            }, 3000);
+        }
+
+        // --- 14. SAFE INITIALIZER BLOCK ---
+        function runSimulationInit() {
+            canvas = document.getElementById('paper-canvas');
+            ctx = canvas.getContext('2d');
+            paperContainer = document.getElementById('paper-container');
+            carriage = document.getElementById('carriage');
+            typebar = document.getElementById('typebar');
+            spoolL = document.getElementById('spool-l');
+            spoolR = document.getElementById('spool-r');
+            ribbonStrip = document.getElementById('ribbon-strip');
+            paperAlert = document.getElementById('no-paper-alert');
+            batchimStatus = document.getElementById('batchim-status');
+
+            canvas.width = canvasWidth * scaleFactor;
+            canvas.height = canvasHeight * scaleFactor;
+            ctx.scale(scaleFactor, scaleFactor);
+
+            // 종이 색깔 매핑
+            const whiteBtn = document.getElementById('paper-white-btn');
+            const creamBtn = document.getElementById('paper-cream-btn');
+            const yellowBtn = document.getElementById('paper-yellow-btn');
+
+            whiteBtn.addEventListener('click', () => {
+                paperColor = 'white';
+                whiteBtn.className = "px-2.5 py-0.5 text-xs font-bold rounded bg-teal-600 text-stone-950 transition-all";
+                creamBtn.className = "px-2.5 py-0.5 text-xs font-bold rounded hover:bg-stone-800 text-stone-400 transition-all";
+                yellowBtn.className = "px-2.5 py-0.5 text-xs font-bold rounded hover:bg-stone-800 text-stone-400 transition-all";
+                applyPaperStyle();
+                drawPaper();
+                playPaperScroll();
+                showToast("하얀색 모조지로 변경했습니다.", "⬜");
+            });
+
+            creamBtn.addEventListener('click', () => {
+                paperColor = 'cream';
+                creamBtn.className = "px-2.5 py-0.5 text-xs font-bold rounded bg-teal-600 text-stone-950 transition-all";
+                whiteBtn.className = "px-2.5 py-0.5 text-xs font-bold rounded hover:bg-stone-800 text-stone-400 transition-all";
+                yellowBtn.className = "px-2.5 py-0.5 text-xs font-bold rounded hover:bg-stone-800 text-stone-400 transition-all";
+                applyPaperStyle();
+                drawPaper();
+                playPaperScroll();
+                showToast("연한 베이지 크림색 종이로 변경했습니다.", "🥛");
+            });
+
+            yellowBtn.addEventListener('click', () => {
+                paperColor = 'yellow';
+                yellowBtn.className = "px-2.5 py-0.5 text-xs font-bold rounded bg-teal-600 text-stone-950 transition-all";
+                whiteBtn.className = "px-2.5 py-0.5 text-xs font-bold rounded hover:bg-stone-800 text-stone-400 transition-all";
+                creamBtn.className = "px-2.5 py-0.5 text-xs font-bold rounded hover:bg-stone-800 text-stone-400 transition-all";
+                applyPaperStyle();
+                drawPaper();
+                playPaperScroll();
+                showToast("선명한 노란색 종이로 변경했습니다.", "🟨");
+            });
+
+            // 기능 제어 버튼 바인딩
+            document.getElementById('btn-load-paper').addEventListener('click', loadPaper);
+            document.getElementById('btn-rip-paper').addEventListener('click', ripPaper);
+            document.getElementById('return-lever').addEventListener('click', performReturn);
+            document.getElementById('btn-backspace').addEventListener('click', moveBackAndErase);
+            document.getElementById('btn-latch-batchim').addEventListener('click', toggleBatchim);
+
+            const soundBtn = document.getElementById('btn-sound-toggle');
+            soundBtn.addEventListener('click', () => {
+                isSoundEnabled = !isSoundEnabled;
+                soundBtn.textContent = isSoundEnabled ? '🔊 소리 켬' : '🔇 소리 끔';
+                soundBtn.className = isSoundEnabled 
+                    ? "px-3 py-1.5 bg-teal-600/30 hover:bg-teal-600/50 text-teal-300 rounded border border-teal-600/50 text-sm transition"
+                    : "px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-400 rounded border border-stone-700 text-sm transition";
+            });
+
+            const rBlack = document.getElementById('ribbon-black');
+            const rRed = document.getElementById('ribbon-red');
+            rBlack.addEventListener('click', () => {
+                ribbonColor = 'black';
+                rBlack.className = "w-6 h-6 rounded-full bg-stone-900 border-2 border-teal-500 cursor-pointer scale-110 transition";
+                rRed.className = "w-6 h-6 rounded-full bg-red-700 border border-stone-700 cursor-pointer transition hover:scale-110";
+                ribbonStrip.style.backgroundColor = '#1c1c1c';
+                playTypewriterClack(true);
+                showToast("검은색 잉크 리본으로 변경했습니다.", "🖤");
+            });
+            rRed.addEventListener('click', () => {
+                ribbonColor = 'red';
+                rRed.className = "w-6 h-6 rounded-full bg-red-700 border-2 border-teal-500 cursor-pointer scale-110 transition";
+                rBlack.className = "w-6 h-6 rounded-full bg-stone-900 border border-stone-700 cursor-pointer transition hover:scale-110";
+                ribbonStrip.style.backgroundColor = '#7a1414';
+                playTypewriterClack(true);
+                showToast("빨간색 잉크 리본으로 변경했습니다.", "❤️");
+            });
+
+            document.getElementById('btn-manual').addEventListener('click', () => {
+                document.getElementById('modal-manual').classList.remove('hidden');
+            });
+            document.getElementById('btn-manual-close').addEventListener('click', () => {
+                document.getElementById('modal-manual').classList.add('hidden');
+            });
+            document.getElementById('btn-rip-close').addEventListener('click', () => {
+                document.getElementById('modal-rip').classList.add('hidden');
+            });
+
+            document.getElementById('btn-copy-text').addEventListener('click', () => {
+                let combinedText = [];
+                for (let y = 0; y < documentLines.length; y++) {
+                    const line = documentLines[y];
+                    if (!line) continue;
+                    let lineStr = [];
+                    for (let x = 0; x < line.length; x++) {
+                        lineStr[x] = (line[x] && line[x].char) ? line[x].char : ' ';
+                    }
+                    combinedText.push(lineStr.join(''));
+                }
+                const finalStr = combinedText.join('\n');
+
+                if (!finalStr.trim()) {
+                    showToast("복사할 텍스트 본문이 비어 있습니다.", "⚠️");
+                    return;
+                }
+
+                const dummy = document.createElement("textarea");
+                document.body.appendChild(dummy);
+                dummy.value = finalStr;
+                dummy.select();
+                document.execCommand("copy");
+                document.body.removeChild(dummy);
+
+                showToast("전체 문장을 클립보드에 복사했습니다!", "📋");
+            });
+
+            // 롤러 종이 스크롤 제어
+            paperContainer.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                if (!isPaperLoaded) return;
+                playPaperScroll();
+                const dir = e.deltaY > 0 ? -1 : 1;
+                paperScrollY += dir * 14;
+                if (paperScrollY < -240) paperScrollY = -240; 
+                if (paperScrollY > 180) paperScrollY = 180;
+                paperContainer.style.transform = `translateY(${paperScrollY}px)`;
+            });
+
+            const platenKnobs = [document.getElementById('knob-left'), document.getElementById('knob-right')];
+            platenKnobs.forEach(knob => {
+                let startY = 0;
+                let startScroll = 0;
+                const onDrag = (e) => {
+                    if (!isPaperLoaded) return;
+                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                    const deltaY = clientY - startY;
+                    paperScrollY = startScroll - Math.round(deltaY / 1.8);
+                    if (paperScrollY < -240) paperScrollY = -240; 
+                    if (paperScrollY > 180) paperScrollY = 180;
+                    paperContainer.style.transform = `translateY(${paperScrollY}px)`;
+                };
+                const stopDrag = () => {
+                    window.removeEventListener('mousemove', onDrag);
+                    window.removeEventListener('mouseup', stopDrag);
+                    window.removeEventListener('touchmove', onDrag);
+                    window.removeEventListener('touchend', stopDrag);
+                };
+                const startDrag = (e) => {
+                    if (!isPaperLoaded) return;
+                    e.preventDefault();
+                    startY = e.touches ? e.touches[0].clientY : e.clientY;
+                    startScroll = paperScrollY;
+                    playPaperScroll();
+                    window.addEventListener('mousemove', onDrag);
+                    window.addEventListener('mouseup', stopDrag);
+                    window.addEventListener('touchmove', onDrag, { passive: false });
+                    window.addEventListener('touchend', stopDrag);
+                };
+                knob.addEventListener('mousedown', startDrag);
+                knob.addEventListener('touchstart', startDrag, { passive: false });
+            });
+
+            // 컴퓨터 물리 키보드 바인딩 등록
+            window.addEventListener('keydown', handlePhysicalKeyDown);
+            window.addEventListener('keyup', handlePhysicalKeyUp);
+
+            // 가상 키패드 렌더링
+            renderKeyboard();
+            adjustMechanicalScaling();
+
+            // ★ [서체 강제 사전 로더 메커니즘] ★
+            // 브라우저 폰트 캐시에 Joseon100Years가 안정적으로 로딩되었는지 검증 및 캔버스 자동 동기화
+            const fontStatusBadge = document.getElementById('font-status-badge');
+            
+            const checkFontLoad = () => {
+                document.fonts.load("1em Joseon100Years").then((loaded) => {
+                    if (loaded && loaded.length > 0) {
+                        fontStatusBadge.textContent = "✔ 조선일보 100주년 서체 장착됨";
+                        fontStatusBadge.className = "px-3 py-1 bg-stone-950 rounded text-emerald-400 border border-stone-800 text-xs font-bold h-[32px] flex items-center";
+                        drawPaper();
+                    } else {
+                        setTimeout(checkFontLoad, 250);
+                    }
+                }).catch(() => {
+                    setTimeout(checkFontLoad, 500);
+                });
+            };
+            
+            if (document.fonts) {
+                const f = new FontFace('Joseon100Years', "url('https://gcore.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/ChosunCentennial.woff2')");
+                f.load().then((loadedFace) => {
+                    document.fonts.add(loadedFace);
+                    checkFontLoad();
+                }).catch(() => {
+                    checkFontLoad();
+                });
+            } else {
+                fontStatusBadge.textContent = "⚠ 브라우저 폰트 호환 불가";
+                fontStatusBadge.className = "px-3 py-1 bg-stone-950 rounded text-amber-500 border border-stone-800 text-xs font-bold h-[32px] flex items-center";
+            }
+        }
+
+        // DOM 로드 완료 보장 실행
+        if (document.readyState === 'loading') {
+            window.addEventListener('DOMContentLoaded', runSimulationInit);
+        } else {
+            runSimulationInit();
+        }
+    </script>
+</body>
+</html>        .retro-square-key {
             display: flex;
             flex-direction: column;
             align-items: center;
