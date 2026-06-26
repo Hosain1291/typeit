@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>1970년대 레트로 민트 두벌식 타자기</title>
+    <title>1980년대 레트로 민트 기계식 타자기</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -11,59 +11,63 @@
     <style>
         body {
             font-family: 'Song Myung', 'Nanum Myeongjo', serif;
-            background-color: #171c1a;
-            background-image: radial-gradient(rgba(0, 0, 0, 0.45) 1px, transparent 0),
-                              radial-gradient(rgba(0, 0, 0, 0.45) 1px, transparent 0);
+            background-color: #121615;
+            background-image: radial-gradient(rgba(0, 0, 0, 0.5) 1px, transparent 0),
+                              radial-gradient(rgba(0, 0, 0, 0.5) 1px, transparent 0);
             background-size: 8px 8px;
             background-position: 0 0, 4px 4px;
-            touch-action: manipulation; /* Prevent double-tap zoom on mobile */
+            touch-action: manipulation; /* Prevent mobile double-tap zoom */
         }
-        /* 1970s Streamlined Mint/Sage Green Painted Chassis */
+        /* 1980s Sophisticated Matte Mint/Sage Painted Hybrid Body */
         .typewriter-body {
-            background: linear-gradient(135deg, #a7e0d3 0%, #6abda9 50%, #449784 100%);
-            box-shadow: inset 0 3px 6px rgba(255,255,255,0.45), 
-                        0 20px 45px rgba(0,0,0,0.85),
-                        0 2px 12px rgba(68, 151, 132, 0.5);
-            border: 4px solid #5caea1;
+            background: linear-gradient(135deg, #aedfd4 0%, #7dbfae 50%, #529f8c 100%);
+            box-shadow: inset 0 3px 6px rgba(255,255,255,0.5), 
+                        0 25px 50px rgba(0,0,0,0.9),
+                        0 4px 20px rgba(82, 159, 140, 0.4);
+            border: 4px solid #6cb1a1;
         }
-        /* Elegant 1970s Square-Rounded Molded Plastic Keycaps - Deep Forest/Teal Tone */
+        /* Ergonomic 1980s Chamfered Keycaps - Dark Pine Green & Deep Teal */
         .vintage-key {
-            background: radial-gradient(circle at 35% 35%, #2a5048 0%, #132c26 100%);
-            border: 1px solid #0f2420;
-            box-shadow: inset 0 1px 2px rgba(255,255,255,0.2),
-                        0 3px 0 #091714, 
-                        0 5px 8px rgba(0,0,0,0.55);
+            background: linear-gradient(180deg, #2b4942 0%, #172d28 100%);
+            border-top: 1px solid #4a6f66;
+            border-left: 1px solid #2b4942;
+            border-right: 1px solid #11221e;
+            border-bottom: 3px solid #08120f;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.15),
+                        0 4px 6px rgba(0,0,0,0.6);
             transition: all 0.05s ease;
-            color: #e6f4f1;
-            text-shadow: 0 -1px 0 rgba(0,0,0,0.9);
-            border-radius: 6px; /* Sleek 70s rounded square shape */
+            color: #ecf7f5;
+            text-shadow: 0 -1px 0 rgba(0,0,0,0.85);
+            border-radius: 8px; /* Slightly squarer 1980s chamfered design */
         }
         .vintage-key:active, .vintage-key.pressed {
             transform: translateY(3px);
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.7),
-                        0 0px 0 #091714, 
-                        0 2px 3px rgba(0,0,0,0.55);
-            background: radial-gradient(circle at center, #132c26 0%, #091714 100%);
+            border-bottom: 0px solid #08120f;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.8),
+                        0 1px 2px rgba(0,0,0,0.4);
+            background: linear-gradient(180deg, #172d28 0%, #0d1a17 100%);
         }
-        /* Vibrant Crimson Red Accents for Special Keys */
+        /* Vibrant 1980s Orange-Red Key Accents (Common on Smith-Corona/Olympia) */
         .vintage-key-red {
-            background: radial-gradient(circle at 35% 35%, #d13030 0%, #7c1212 100%) !important;
-            border-color: #9c2828 !important;
-            box-shadow: inset 0 1px 2px rgba(255,255,255,0.35),
-                        0 3px 0 #4a0909, 
-                        0 5px 8px rgba(0,0,0,0.55) !important;
+            background: linear-gradient(180deg, #e34c4c 0%, #a62424 100%) !important;
+            border-top-color: #f77474 !important;
+            border-left-color: #d63e3e !important;
+            border-right-color: #8c1a1a !important;
+            border-bottom: 3px solid #4c0707 !important;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.3),
+                        0 4px 6px rgba(0,0,0,0.6) !important;
             color: #ffffff !important;
         }
         .vintage-key-red:active, .vintage-key-red.pressed {
             transform: translateY(3px);
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.7),
-                        0 0px 0 #4a0909, 
-                        0 2px 3px rgba(0,0,0,0.55) !important;
-            background: radial-gradient(circle at center, #931717 0%, #540b0b 100%) !important;
+            border-bottom: 0px solid #4c0707 !important;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.8),
+                        0 1px 2px rgba(0,0,0,0.4) !important;
+            background: linear-gradient(180deg, #ab2626 0%, #7d1515 100%) !important;
         }
         /* Metal Carriage slide mechanics */
         .carriage-transition {
-            transition: transform 0.12s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: transform 0.1s cubic-bezier(0.25, 1, 0.5, 1);
         }
         /* Strike bar animation */
         @keyframes strike {
@@ -72,7 +76,7 @@
             100% { transform: translate(-50%, 100%) scaleY(0.1); opacity: 0; }
         }
         .typebar-striking {
-            animation: strike 0.08s ease-out;
+            animation: strike 0.07s ease-out;
         }
         /* Beautiful Toast Message Container */
         #custom-toast {
@@ -88,7 +92,7 @@
 <body class="min-h-screen text-stone-200 overflow-x-hidden flex flex-col justify-between select-none">
 
     <!-- Toast Notification -->
-    <div id="custom-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-stone-900 border border-emerald-600 text-emerald-400 px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 z-50 opacity-0 pointer-events-none font-sans text-sm">
+    <div id="custom-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-stone-900 border border-teal-500 text-teal-400 px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 z-50 opacity-0 pointer-events-none font-sans text-sm">
         <span class="text-base" id="toast-icon">✨</span>
         <span id="toast-text">알림 메시지</span>
     </div>
@@ -96,15 +100,15 @@
     <!-- Header Block -->
     <header class="w-full bg-stone-900/95 border-b border-stone-800 p-4 shadow-md backdrop-blur flex justify-between items-center z-50">
         <div class="flex items-center space-x-3">
-            <span class="text-3xl">🍵</span>
+            <span class="text-3xl">📟</span>
             <div>
-                <h1 class="text-xl md:text-2xl font-bold text-teal-400 tracking-wider">1970년대 레트로 민트 두벌식 타자기</h1>
-                <p class="text-xs text-stone-400 font-sans">Vintage Mint Steel-Style 2-Set Hangul Typewriter (Mobile Optimized)</p>
+                <h1 class="text-xl md:text-2xl font-bold text-teal-400 tracking-wider">1980년대 레트로 민트 기계식 타자기</h1>
+                <p class="text-xs text-stone-400 font-sans">Vintage 1980s Mint Portable Typewriter (Perfect Combined Hangul & Lift-Off Correction)</p>
             </div>
         </div>
         <div class="flex space-x-3">
             <button id="btn-manual" class="px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-300 rounded border border-stone-700 text-sm transition font-sans">
-                📖 사용 설명서
+                📖 도움말
             </button>
             <button id="btn-sound-toggle" class="px-3 py-1.5 bg-teal-600/30 hover:bg-teal-600/50 text-teal-300 rounded border border-teal-600/50 text-sm transition font-sans">
                 🔊 소리 켬
@@ -119,17 +123,17 @@
         <div class="w-full max-w-4xl flex flex-wrap justify-between items-center gap-3 bg-stone-900/70 p-3 rounded-lg border border-stone-800 backdrop-blur mb-4">
             <div class="flex items-center space-x-4">
                 <div class="flex flex-col">
-                    <span class="text-xs text-stone-400 font-sans mb-1">잉크 리본 색상</span>
+                    <span class="text-xs text-stone-400 font-sans mb-1">인쇄 리본 색상</span>
                     <div class="flex items-center space-x-2 bg-stone-950 p-1 rounded border border-stone-800">
                         <button id="ribbon-black" class="w-6 h-6 rounded-full bg-stone-900 border-2 border-teal-500 cursor-pointer transition transform scale-110" title="검정 리본"></button>
                         <button id="ribbon-red" class="w-6 h-6 rounded-full bg-red-700 border border-stone-700 cursor-pointer transition hover:scale-110" title="빨강 리본"></button>
                     </div>
                 </div>
 
-                <div class="flex flex-col">
-                    <span class="text-xs text-stone-400 font-sans mb-1">인쇄 모드</span>
-                    <div class="px-3 py-1 bg-stone-950 rounded text-teal-400 border border-stone-800 text-xs font-bold h-[30px] flex items-center font-sans">
-                        🖨️ 두벌식 겹침인쇄 (고정)
+                <div class="flex flex-col font-sans">
+                    <span class="text-xs text-stone-400 mb-1">교정 및 한글 모드</span>
+                    <div class="px-3 py-1 bg-stone-950 rounded text-teal-400 border border-stone-800 text-xs font-bold h-[30px] flex items-center">
+                        📼 정밀 한글 조합형 & 교정용 Lift-Off 테이프
                     </div>
                 </div>
             </div>
@@ -137,7 +141,7 @@
             <!-- Jam Meter -->
             <div class="flex items-center space-x-3 bg-stone-950 px-4 py-2 rounded-lg border border-stone-800">
                 <div class="flex flex-col">
-                    <span class="text-[10px] text-stone-400 font-sans uppercase tracking-widest">활판 엉킴 한계치</span>
+                    <span class="text-[10px] text-stone-400 font-sans uppercase tracking-widest">활판 과열 한계</span>
                     <div class="w-24 md:w-28 bg-stone-800 h-2 rounded overflow-hidden mt-1">
                         <div id="jam-bar" class="bg-teal-500 h-full w-0 transition-all duration-100"></div>
                     </div>
@@ -163,7 +167,7 @@
             <!-- TYPEWRITER CHASSIS -->
             <div id="typewriter-chassis" class="w-[896px] typewriter-body rounded-2xl p-6 flex flex-col items-center gap-6 relative overflow-hidden shrink-0">
                 
-                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none"></div>
 
                 <!-- 1. CARRIAGE ASSEMBLY -->
                 <div class="w-full bg-stone-900 rounded-xl p-3 border-b-4 border-stone-950 relative shadow-2xl flex flex-col items-center overflow-hidden h-[420px]">
@@ -181,14 +185,14 @@
                         </div>
 
                         <!-- Left Platen Knob -->
-                        <div id="knob-left" class="absolute -left-6 top-1/2 -translate-y-1/2 w-8 h-12 bg-gradient-to-r from-stone-200 to-stone-300 rounded border-y border-stone-400 cursor-ns-resize shadow-lg flex flex-col justify-between p-1 z-30" title="종이 스크롤">
+                        <div id="knob-left" class="absolute -left-6 top-1/2 -translate-y-1/2 w-8 h-12 bg-gradient-to-r from-stone-100 to-stone-200 rounded border-y border-stone-400 cursor-ns-resize shadow-lg flex flex-col justify-between p-1 z-30" title="종이 스크롤">
                             <div class="h-0.5 bg-stone-400 w-full"></div>
                             <div class="h-0.5 bg-stone-400 w-full"></div>
                             <div class="h-0.5 bg-stone-400 w-full"></div>
                         </div>
 
                         <!-- Right Platen Knob -->
-                        <div id="knob-right" class="absolute -right-6 top-1/2 -translate-y-1/2 w-8 h-12 bg-gradient-to-l from-stone-200 to-stone-300 rounded border-y border-stone-400 cursor-ns-resize shadow-lg flex flex-col justify-between p-1 z-30" title="종이 스크롤">
+                        <div id="knob-right" class="absolute -right-6 top-1/2 -translate-y-1/2 w-8 h-12 bg-gradient-to-l from-stone-100 to-stone-200 rounded border-y border-stone-400 cursor-ns-resize shadow-lg flex flex-col justify-between p-1 z-30" title="종이 스크롤">
                             <div class="h-0.5 bg-stone-400 w-full"></div>
                             <div class="h-0.5 bg-stone-400 w-full"></div>
                             <div class="h-0.5 bg-stone-400 w-full"></div>
@@ -220,7 +224,7 @@
                     <!-- FRONT STATIC ELEMENTS -->
                     <div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-48 h-28 z-30 pointer-events-none flex flex-col justify-between items-center">
                         <div id="no-paper-alert" class="px-3 py-1 bg-red-600 text-stone-100 text-xs font-sans font-bold rounded-lg shadow-lg animate-bounce transition-opacity">
-                            종이가 장착되지 않았습니다
+                            종이가 없습니다 (새 종이 넣기를 클릭하세요)
                         </div>
 
                         <div id="jam-alert" class="px-3 py-1 bg-amber-600 text-stone-100 text-xs font-sans font-bold rounded-lg shadow-lg hidden animate-pulse">
@@ -253,7 +257,7 @@
                     <!-- Brand Plaque -->
                     <div class="text-center">
                         <div class="text-teal-300 font-extrabold tracking-[0.25em] text-base font-serif uppercase">二部式 打字機</div>
-                        <div class="text-[9px] text-stone-500 tracking-wider font-sans">1970s Mint Portable Retro Edition</div>
+                        <div class="text-[9px] text-stone-500 tracking-wider font-sans">1980s Mint Perfect combined Edition</div>
                     </div>
 
                     <div class="flex items-center space-x-2">
@@ -272,27 +276,24 @@
                     <!-- Utility row -->
                     <div class="flex flex-wrap justify-between items-center gap-2 mb-1 px-1">
                         <div class="flex space-x-2">
-                            <button id="btn-backspace" class="px-4 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-300 rounded border border-stone-700 text-xs font-bold font-sans flex items-center gap-1">
-                                ⬅️ 백스페이스 (Backspace)
-                            </button>
-                            <button id="btn-correction" class="px-4 py-1.5 bg-stone-200 hover:bg-stone-100 text-stone-900 rounded border border-stone-300 text-xs font-bold font-sans flex items-center gap-1 shadow-md">
-                                💧 수정액 바르기 (White-out)
+                            <button id="btn-backspace" class="px-4 py-1.5 bg-red-800 hover:bg-red-700 text-stone-100 rounded border border-red-900 text-xs font-bold font-sans flex items-center gap-1 shadow-md">
+                                ⌫ 한 자 지우기 (Backspace)
                             </button>
                             <button id="btn-latch-batchim" class="px-4 py-1.5 bg-stone-800 hover:bg-stone-700 text-teal-400 rounded border border-stone-700 text-xs font-bold font-sans flex items-center gap-1">
                                 ⬇️ 받침 키 상태: <span id="batchim-status" class="text-red-500 font-bold">해제</span>
                             </button>
                         </div>
                         <div id="desktop-tip" class="text-[11px] text-stone-400 bg-stone-900/80 px-2 py-1 rounded font-sans hidden">
-                            💡 PC 키보드 자판으로 한글 입력 시 자동으로 조합되어 인쇄됩니다.
+                            💡 PC 키보드로 한글을 치시면 'ㅈㅗㄴ' 대신 '존'처럼 완벽하게 합쳐져서 타이핑됩니다!
                         </div>
                         <div id="mobile-tip" class="text-[11px] text-teal-400 bg-stone-900/80 px-2 py-1 rounded font-sans hidden">
-                            📱 모바일 터치 모드 활성화됨 (시스템 키보드가 열리지 않습니다)
+                            📱 모바일 터치 모드: 하단 자판 터치 시 한글이 정교하게 조합되며 Backspace로 말끔히 박리 제거됩니다.
                         </div>
                     </div>
 
                     <!-- Virtual Keys Grid -->
                     <div id="virtual-keyboard" class="flex flex-col gap-2">
-                        <!-- Keys will be rendered dynamically -->
+                        <!-- Keys rendered from JavaScript -->
                     </div>
                 </div>
             </div>
@@ -301,49 +302,44 @@
 
     <!-- Footer Explainer -->
     <footer class="w-full bg-stone-950 py-4 px-6 border-t border-stone-900 text-center text-xs text-stone-500 font-sans">
-        <p>© 1970 기계식 두벌식 타자기 시뮬레이터. 실제 타자기 고유의 받침 메커니즘을 복원하였습니다.</p>
+        <p>© 1980 기계식 두벌식 지우는 타자기 시뮬레이터. Lift-Off Correction Tape System & Hangul Automaton.</p>
     </footer>
 
     <!-- MODAL: HELP & MANUAL -->
-    <div id="modal-manual" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 hidden backdrop-blur-sm">
-        <div class="bg-stone-900 border-2 border-stone-700 rounded-xl p-6 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl relative font-sans text-stone-300">
+    <div id="modal-manual" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 hidden backdrop-blur-sm font-sans">
+        <div class="bg-stone-900 border-2 border-stone-700 rounded-xl p-6 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl relative text-stone-300">
             <button id="btn-manual-close" class="absolute top-4 right-4 text-stone-400 hover:text-stone-100 text-xl font-bold">×</button>
             
             <h3 class="text-xl font-bold text-teal-400 mb-4 border-b border-stone-800 pb-2 flex items-center gap-2">
-                📖 1970년대 두벌식 타자기 가이드
+                📖 1980년대 두벌식 교정 타자기 가이드
             </h3>
             
             <div class="space-y-4 text-sm leading-relaxed">
                 <div>
-                    <h4 class="font-bold text-stone-100 mb-1">1. 종이 급지 (Paper Feed)</h4>
-                    <p class="text-stone-300">우측 상단의 <span class="text-emerald-400 font-bold">"새 종이 넣기"</span> 버튼을 눌러야 종이가 장착되어 타이핑이 시작됩니다. 종이가 없는 상태에서는 활판이 맨 쇠에 직접 닿는 둔탁한 타격음이 나며 찍히지 않습니다. 마우스 휠 또는 양옆의 조절 다이얼(노브)을 드래그하여 위아래로 종이를 조절할 수 있습니다.</p>
+                    <h4 class="font-bold text-stone-100 mb-1">1. 종이 장착 (Paper Feed)</h4>
+                    <p class="text-stone-300">우측 상단의 **"새 종이 넣기"** 버튼을 눌러야 원통형 롤러에 백지가 장착되며 타이핑이 시작됩니다. 종이가 없으면 둔탁한 소리가 나며 찍히지 않습니다.</p>
                 </div>
 
                 <div>
-                    <h4 class="font-bold text-stone-100 mb-1">2. 두벌식 겹침 인쇄 공법</h4>
-                    <p class="text-stone-300">컴퓨터 조판 시스템과 달리, 과거의 기계식 2벌식 타자기는 사용자가 글쇠를 누르는 즉시 하나의 쇠팔(Typebar)이 올라와 종이 위에 포개어 찍는 방식으로 동작했습니다. 따라서 글씨가 찍힐 때 자모가 완벽하게 결합하지 않고 약간 어긋나거나 흔들리는 독특한 빈티지 폰트 질감이 자연스럽게 완성됩니다.</p>
+                    <h4 class="font-bold text-stone-100 mb-1">2. 완성형 한글 결합 조합 기법</h4>
+                    <p class="text-stone-300">사용자가 자음과 모음을 차례대로 누르면, 내장된 2벌식 오토마타 기계 장치가 글자의 흐름을 분석하여 **'ㅈㅗㄴ' 형태가 아닌 '존'과 같이 결합된 아름다운 단 한 벌의 기계 자형**으로 합산 인쇄합니다.</p>
                 </div>
 
                 <div>
-                    <h4 class="font-bold text-stone-100 mb-1">3. 받침 키 (Shift)</h4>
-                    <p class="text-stone-300">자음 중 받침용으로 쓰이는 글자들은 화면의 **`받침`** 키를 클릭하여 활성화하거나, PC 키보드의 **Shift 키**를 누른 채 입력하시면 쇠팔이 약간 아래쪽으로 이동하여 정상적인 '받침' 위치에 글씨를 스탬핑합니다.</p>
-                </div>
-
-                <div>
-                    <h4 class="font-bold text-stone-100 mb-1">4. 스마트폰 전용 무중단 터치 설계</h4>
-                    <p class="text-stone-300">모바일 환경에서는 기기 본연의 자판이 튀어나와 낭만적인 타자기 화면을 가려버리는 현상을 원천 방지하기 위해, 오직 하단 가상 키보드 터치식으로만 구동하도록 입력 차단 설계를 완성했습니다.</p>
+                    <h4 class="font-bold text-stone-100 mb-1">3. 리프트오프 오타 자동 탈착 삭제</h4>
+                    <p class="text-stone-300">오타가 났다면 주저 없이 **`Backspace`** 키(혹은 화면의 **한 자 지우기**)를 누르세요. 1980년대식 고유 리프트오프 접착 테이프가 작동하여 종이 위의 글자를 역추적해 **자모를 떼어내듯이 말끔히 박리 지우기** 처리합니다.</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- MODAL: PAPER PREVIEW -->
-    <div id="modal-rip" class="fixed inset-0 bg-black/95 flex items-center justify-center p-4 z-50 hidden backdrop-blur-sm">
-        <div class="bg-stone-900 border-2 border-stone-700 rounded-xl p-6 max-w-xl w-full flex flex-col items-center shadow-2xl relative font-sans text-stone-300">
+    <div id="modal-rip" class="fixed inset-0 bg-black/95 flex items-center justify-center p-4 z-50 hidden backdrop-blur-sm font-sans">
+        <div class="bg-stone-900 border-2 border-stone-700 rounded-xl p-6 max-w-xl w-full flex flex-col items-center shadow-2xl relative text-stone-300">
             <button id="btn-rip-close" class="absolute top-4 right-4 text-stone-400 hover:text-stone-100 text-xl font-bold">×</button>
             
             <h3 class="text-xl font-bold text-teal-400 mb-2 flex items-center gap-2">
-                ✂️ 타자기에서 찢어낸 고운 편지
+                ✂️ 타자기에서 뜯어낸 소중한 기록
             </h3>
             <p class="text-xs text-stone-400 mb-4 text-center">작성하신 아날로그 타자 문서가 한 장의 아름다운 인쇄지로 탄생했습니다.</p>
 
@@ -362,17 +358,66 @@
         </div>
     </div>
 
-    <!-- Hidden input is only instantiated on Non-Mobile/Desktop devices -->
     <div id="input-container"></div>
 
     <script>
-        // --- 1. DEVICE DETECT FOR MOBILE TOUCH-ONLY MODE ---
-        // Prevents system keyboard on mobile devices while maintaining physical keyboard support on desktops
+        // --- 1. DEVICE DETECT ---
         const isMobileDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
-        // --- 2. RETRO TWO-SET TYPEWRITER LAYOUT SPECIFICATION ---
+        // --- 2. HANGUL MAPS FOR CONSOLIDATED SYLLABLES ---
+        const CHO_MAP = {
+            'ㄱ': 0, 'ㄲ': 1, 'ㄴ': 2, 'ㄷ': 3, 'ㄸ': 4, 'ㄹ': 5, 'ㅁ': 6, 'ㅂ': 7, 'ㅃ': 8,
+            'ㅅ': 9, 'ㅆ': 10, 'ㅇ': 11, 'ㅈ': 12, 'ㅉ': 13, 'ㅊ': 14, 'ㅋ': 15, 'ㅌ': 16,
+            'ㅍ': 17, 'ㅎ': 18
+        };
+        const JUNG_MAP = {
+            'ㅏ': 0, 'ㅐ': 1, 'ㅑ': 2, 'ㅒ': 3, 'ㅓ': 4, 'ㅔ': 5, 'ㅕ': 6, 'ㅖ': 7, 'ㅗ': 8,
+            'ㅘ': 9, 'ㅙ': 10, 'ㅚ': 11, 'ㅛ': 12, 'ㅜ': 13, 'ㅝ': 14, 'ㅞ': 15, 'ㅟ': 16,
+            'ㅠ': 17, 'ㅡ': 18, 'ㅢ': 19, 'ㅣ': 20
+        };
+        const JONG_MAP = {
+            '': 0, 'ㄱ': 1, 'ㄲ': 2, 'ㄳ': 3, 'ㄴ': 4, 'ㄵ': 5, 'ㄶ': 6, 'ㄷ': 7, 'ㄹ': 8,
+            'ㄺ': 9, 'ㄻ': 10, 'ㄼ': 11, 'ㄽ': 12, 'ㄾ': 13, 'ㄿ': 14, 'ㅀ': 15, 'ㅁ': 16,
+            'ㅂ': 17, 'ㅄ': 18, 'ㅅ': 19, 'ㅆ': 20, 'ㅇ': 21, 'ㅈ': 22, 'ㅊ': 23, 'ㅋ': 24,
+            'ㅌ': 25, 'ㅍ': 26, 'ㅎ': 27
+        };
+
+        const COMPLEX_JUNG = {
+            'ㅗㅏ': 'ㅘ', 'ㅗㅐ': 'ㅙ', 'ㅗㅣ': 'ㅚ',
+            'ㅜㅓ': 'ㅝ', 'ㅜㅔ': 'ㅞ', 'ㅜㅣ': 'ㅟ',
+            'ㅡㅣ': 'ㅢ'
+        };
+
+        const COMPLEX_JONG = {
+            'ㄱㅅ': 'ㄳ', 'ㄴㅈ': 'ㄵ', 'ㄴㅎ': 'ㄶ',
+            'ㄹㄱ': 'ㄺ', 'ㄹㅁ': 'ㄻ', 'ㄹㅂ': 'ㄼ', 'ㄹㅅ': 'ㄽ', 'ㄹㅌ': 'ㄾ', 'ㄹㅍ': 'ㄿ', 'ㄹㅎ': 'ㅀ',
+            'ㅂㅅ': 'ㅄ'
+        };
+
+        const SPLIT_JONG = {
+            'ㄳ': ['ㄱ', 'ㅅ'], 'ㄵ': ['ㄴ', 'ㅈ'], 'ㄶ': ['ㄴ', 'ㅎ'],
+            'ㄺ': ['ㄹ', 'ㄱ'], 'ㄻ': ['ㄹ', 'ㅁ'], 'ㄼ': ['ㄹ', 'ㅂ'], 'ㄽ': ['ㄹ', 'ㅅ'],
+            'ㄾ': ['ㄹ', 'ㅌ'], 'ㄿ': ['ㄹ', 'ㅍ'], 'ㅀ': ['ㄹ', 'ㅎ'], 'ㅄ': ['ㅂ', 'ㅅ']
+        };
+
+        const CONSONANTS = new Set(Object.keys(CHO_MAP));
+        const VOWELS = new Set(Object.keys(JUNG_MAP));
+
+        // QWERTY Key mapping tables for instant desktop English to Korean IME fallback
+        const QWERTY_TO_KOR = {
+            'q': 'ㅂ', 'w': 'ㅈ', 'e': 'ㄷ', 'r': 'ㄱ', 't': 'ㅅ', 'y': 'ㅛ', 'u': 'ㅕ', 'i': 'ㅑ', 'o': 'ㅐ', 'p': 'ㅔ',
+            'a': 'ㅁ', 's': 'ㄴ', 'd': 'ㅇ', 'f': 'ㄹ', 'g': 'ㅎ', 'h': 'ㅗ', 'j': 'ㅓ', 'k': 'ㅏ', 'l': 'ㅣ', ';': 'ㄶ',
+            'z': 'ㅋ', 'x': 'ㅌ', 'c': 'ㅊ', 'v': 'ㅍ', 'b': 'ㅠ', 'n': 'ㅜ', 'm': 'ㅡ', ',': 'ㅄ', '.': '·', '/': '?',
+            '1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9', '0': '0',
+            '-': '-', '=': '+'
+        };
+        const QWERTY_TO_KOR_SHIFT = {
+            'q': 'ㅃ', 'w': 'ㅉ', 'e': 'ㄸ', 'r': 'ㄲ', 't': 'ㅆ', 'y': 'ㅛ', 'u': 'ㅕ', 'i': 'ㅑ', 'o': 'ㅒ', 'p': 'ㅖ',
+            'a': 'ㅁ', 's': 'ㄴ', 'd': 'ㅇ', 'f': 'ㄹ', 'g': 'ㅎ', 'h': 'ㅗ', 'j': 'ㅓ', 'k': 'ㅏ', 'l': 'ㅣ', ';': ':',
+            'z': 'ㅋ', 'x': 'ㅌ', 'c': 'ㅊ', 'v': 'ㅍ', 'b': 'ㅠ', 'n': 'ㅜ', 'm': 'ㅡ', ',': ',', '.': '.', '/': '?'
+        };
+
         const VISUAL_KEYBOARD = [
-            // Row 1
             [
                 { primary: "1", shift: "!", type: "normal" },
                 { primary: "2", shift: "\"", type: "normal" },
@@ -387,7 +432,6 @@
                 { primary: "ㄲ", shift: "*", type: "normal" },
                 { primary: "ㄻ", shift: "+", type: "normal" }
             ],
-            // Row 2
             [
                 { primary: "⇹", shift: "⇹", type: "normal" }, 
                 { primary: "ㅂ", shift: "ㅃ", type: "normal" },
@@ -403,7 +447,6 @@
                 { primary: "ㄺ", shift: "?", type: "normal" },
                 { primary: "⟵", shift: "⟵", type: "special" } 
             ],
-            // Row 3
             [
                 { primary: "🔒", shift: "🔒", type: "special" }, 
                 { primary: "ㅁ", shift: "ㅁ", type: "normal" },
@@ -419,7 +462,6 @@
                 { primary: "ㅆ", shift: "\"", type: "normal" },
                 { primary: "TAB", shift: "TAB", type: "red-tab" } 
             ],
-            // Row 4
             [
                 { primary: "받침", shift: "받침", type: "shift" }, 
                 { primary: "ㅋ", shift: "ㅋ", type: "normal" },
@@ -436,27 +478,7 @@
             ]
         ];
 
-        // --- HANGUL DECOMPOSITION ALGORITHM ---
-        const CHO_LIST = ["ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
-        const JUNG_LIST = ["ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ", "ㅗ", "ㅘ", "ㅙ", "ㅚ", "ㅛ", "ㅜ", "ㅝ", "ㅞ", "ㅟ", "ㅠ", "ㅡ", "ㅢ", "ㅣ"];
-        const JONG_LIST = ["", "ㄱ", "ㄲ", "ㄳ", "ㄴ", "ㄵ", "ㄶ", "ㄷ", "ㄹ", "ㄺ", "ㄻ", "ㄼ", "ㄽ", "ㄾ", "ㄿ", "ㅀ", "ㅁ", "ㅂ", "ㅄ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
-
-        function decomposeSyllable(char) {
-            const code = char.charCodeAt(0) - 0xAC00;
-            if (code < 0 || code > 11171) return [char];
-
-            const jongIdx = code % 28;
-            const jungIdx = Math.floor((code % 588) / 28);
-            const choIdx = Math.floor(code / 588);
-
-            return [
-                CHO_LIST[choIdx],
-                JUNG_LIST[jungIdx],
-                JONG_LIST[jongIdx]
-            ].filter(Boolean);
-        }
-
-        // --- CUSTOM TOAST SYSTEM ---
+        // --- 3. TOAST NOTIFICATION ---
         function showToast(text, icon = "✨") {
             const toast = document.getElementById('custom-toast');
             const toastText = document.getElementById('toast-text');
@@ -474,7 +496,7 @@
             }, 3000);
         }
 
-        // --- AUDIO ENGINE ---
+        // --- 4. AUDIO SYSTEM (Synthesized real sounds) ---
         let audioCtx = null;
         let isSoundEnabled = true;
 
@@ -500,24 +522,24 @@
             const now = audioCtx.currentTime;
 
             const noise = audioCtx.createBufferSource();
-            noise.buffer = createNoiseBuffer(isSpace ? 0.07 : 0.05);
+            noise.buffer = createNoiseBuffer(isSpace ? 0.06 : 0.04);
 
             const filter = audioCtx.createBiquadFilter();
             filter.type = 'bandpass';
-            filter.frequency.setValueAtTime(isSpace ? 600 : 1200, now);
-            filter.Q.setValueAtTime(isSpace ? 1.5 : 3.5, now);
+            filter.frequency.setValueAtTime(isSpace ? 650 : 1350, now);
+            filter.Q.setValueAtTime(isSpace ? 1.8 : 4.0, now);
 
             const gain = audioCtx.createGain();
-            gain.gain.setValueAtTime(isSpace ? 0.25 : 0.5, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + (isSpace ? 0.06 : 0.04));
+            gain.gain.setValueAtTime(isSpace ? 0.22 : 0.45, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + (isSpace ? 0.05 : 0.035));
 
             const osc = audioCtx.createOscillator();
             osc.type = 'triangle';
-            osc.frequency.setValueAtTime(isSpace ? 150 : 550, now);
+            osc.frequency.setValueAtTime(isSpace ? 140 : 580, now);
             
             const oscGain = audioCtx.createGain();
-            oscGain.gain.setValueAtTime(isSpace ? 0.07 : 0.1, now);
-            oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+            oscGain.gain.setValueAtTime(isSpace ? 0.06 : 0.09, now);
+            oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
 
             noise.connect(filter);
             filter.connect(gain);
@@ -527,9 +549,55 @@
             oscGain.connect(audioCtx.destination);
 
             noise.start(now);
-            noise.stop(now + 0.08);
+            noise.stop(now + 0.07);
             osc.start(now);
-            osc.stop(now + 0.05);
+            osc.stop(now + 0.04);
+        }
+
+        // Lift-off peeling action tape sound
+        function playCorrectionLiftSound() {
+            if (!isSoundEnabled) return;
+            initAudio();
+            const now = audioCtx.currentTime;
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = createNoiseBuffer(0.08);
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(450, now);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.4, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+            noise.start(now);
+            noise.stop(now + 0.09);
+
+            setTimeout(() => {
+                const peelNow = audioCtx.currentTime;
+                const peelNoise = audioCtx.createBufferSource();
+                peelNoise.buffer = createNoiseBuffer(0.12);
+
+                const peelFilter = audioCtx.createBiquadFilter();
+                peelFilter.type = 'bandpass';
+                peelFilter.frequency.setValueAtTime(2500, peelNow);
+                peelFilter.frequency.exponentialRampToValueAtTime(400, peelNow + 0.1);
+                peelFilter.Q.setValueAtTime(6.0, peelNow);
+
+                const peelGain = audioCtx.createGain();
+                peelGain.gain.setValueAtTime(0.2, peelNow);
+                peelGain.gain.exponentialRampToValueAtTime(0.001, peelNow + 0.12);
+
+                peelNoise.connect(peelFilter);
+                peelFilter.connect(peelGain);
+                peelGain.connect(audioCtx.destination);
+                peelNoise.start(peelNow);
+                peelNoise.stop(peelNow + 0.13);
+            }, 30);
         }
 
         function playMetalStrike() {
@@ -678,7 +746,7 @@
             noise.stop(now + duration);
         }
 
-        // --- TYPEWRITER STATE MANAGEMENT ---
+        // --- 5. SYSTEM STATE ---
         let ribbonColor = 'black';
         let isPaperLoaded = false;
         let isJammed = false;
@@ -693,28 +761,15 @@
 
         let isBatchimActive = false; 
 
-        class Stamp {
-            constructor(char, cho, jung, jong, gridX, gridY, color, isCorrection = false) {
-                this.char = char;
-                this.cho = cho || '';
-                this.jung = jung || '';
-                this.jong = jong || '';
-                this.gridX = gridX;
-                this.gridY = gridY;
-                this.color = color;
-                this.isCorrection = isCorrection;
-
-                // Organic mechanical stamp defects
-                this.offsetX = (Math.random() - 0.5) * 1.5;
-                this.offsetY = (Math.random() - 0.5) * 1.2;
-                this.angle = (Math.random() - 0.5) * 0.04;
-                this.opacity = 0.84 + Math.random() * 0.16;
-                this.scale = 0.95 + Math.random() * 0.1;
-            }
-        }
-
-        let stamps = [];
+        // 2D grid matrix of written cells representing actual sheet
+        // documentLines[y][x] = { char, cho, jung, jong, color, isCorrection }
+        let documentLines = [];
         let currentLineY = 0;
+
+        // Current typing composition buffer
+        let cho = '';
+        let jung = '';
+        let jong = '';
 
         // DOM caching
         const canvas = document.getElementById('paper-canvas');
@@ -738,7 +793,7 @@
         canvas.height = canvasHeight * scaleFactor;
         ctx.scale(scaleFactor, scaleFactor);
 
-        // Dynamic hidden textarea instantiation depending on platform
+        // Instantiate desktop fallback hidden text listener
         let hiddenInput = null;
         if (!isMobileDevice) {
             const inputContainer = document.getElementById('input-container');
@@ -753,13 +808,29 @@
             document.getElementById('mobile-tip').classList.remove('hidden');
         }
 
-        // --- DRAW CANVAS ARTWORK ---
+        // --- 6. HANGUL CONSOLIDATOR ASSEMBLER ---
+        function makeSyllable(c, v, f) {
+            if (!c && !v && !f) return '';
+            if (c && !v) return c; // Single consonant
+            if (!c && v) return v; // Single vowel
+            
+            const choIdx = CHO_MAP[c];
+            const jungIdx = JUNG_MAP[v];
+            const jongIdx = JONG_MAP[f || ''];
+
+            if (choIdx !== undefined && jungIdx !== undefined && jongIdx !== undefined) {
+                return String.fromCharCode(0xAC00 + (choIdx * 21 * 28) + (jungIdx * 28) + jongIdx);
+            }
+            return c + (v || '') + (f || '');
+        }
+
+        // --- 7. RENDERING ENGINE ---
         function drawPaper() {
             ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
             if (!isPaperLoaded) return;
 
-            // Faint red line margin on left
+            // Margin line
             ctx.strokeStyle = 'rgba(230, 80, 80, 0.15)';
             ctx.lineWidth = 1;
             ctx.beginPath();
@@ -767,7 +838,7 @@
             ctx.lineTo(45, canvasHeight);
             ctx.stroke();
 
-            // Guidelines
+            // Writing gridlines
             ctx.strokeStyle = 'rgba(80, 120, 230, 0.06)';
             ctx.beginPath();
             for (let y = 60; y < canvasHeight; y += lineHeight) {
@@ -776,63 +847,41 @@
             }
             ctx.stroke();
 
-            // Draw stamps
-            stamps.forEach(stamp => {
-                const drawX = 60 + (stamp.gridX * charWidth) + stamp.offsetX;
-                const drawY = 80 + (stamp.gridY * lineHeight) + stamp.offsetY;
+            // Render stamps from documentLines
+            for (let y = 0; y < documentLines.length; y++) {
+                const line = documentLines[y];
+                if (!line) continue;
 
-                if (drawY > canvasHeight + 50 || drawY < -50) return;
+                for (let x = 0; x < line.length; x++) {
+                    const cell = line[x];
+                    if (!cell || !cell.char) continue;
 
-                ctx.save();
-                ctx.translate(drawX, drawY);
-                ctx.rotate(stamp.angle);
+                    const drawX = 60 + (x * charWidth) + cell.offsetX;
+                    const drawY = 80 + (y * lineHeight) + cell.offsetY;
 
-                if (stamp.isCorrection) {
-                    ctx.fillStyle = '#ffffff';
-                    ctx.shadowColor = '#eae5da';
-                    ctx.shadowBlur = 4;
-                    ctx.beginPath();
-                    ctx.arc(0, -5, 8, 0, Math.PI * 2);
-                    ctx.fill();
-                } else {
-                    const ink = stamp.color === 'red' ? '#b51f1f' : '#262626';
+                    if (drawY > canvasHeight + 50 || drawY < -50) continue;
+
+                    ctx.save();
+                    ctx.translate(drawX, drawY);
+                    ctx.rotate(cell.angle);
+
+                    const ink = cell.color === 'red' ? '#b51f1f' : '#262626';
                     ctx.fillStyle = ink;
                     ctx.shadowColor = ink;
                     ctx.shadowBlur = 0.4;
-                    ctx.globalAlpha = stamp.opacity;
+                    ctx.globalAlpha = cell.opacity;
 
-                    const fontSize = 16 * stamp.scale;
+                    const fontSize = 16 * cell.scale;
                     ctx.font = `bold ${fontSize}px 'Courier Prime', 'Song Myung', serif`;
-
-                    if (stamp.cho || stamp.jung || stamp.jong) {
-                        if (stamp.cho) {
-                            ctx.save();
-                            ctx.translate(-2, -3);
-                            ctx.fillText(stamp.cho, 0, 0);
-                            ctx.restore();
-                        }
-                        if (stamp.jung) {
-                            ctx.save();
-                            ctx.translate(2.5, 0);
-                            ctx.fillText(stamp.jung, 0, 0);
-                            ctx.restore();
-                        }
-                        if (stamp.jong) {
-                            ctx.save();
-                            ctx.translate(0, 6.5);
-                            ctx.font = `bold ${fontSize * 0.9}px 'Courier Prime', 'Song Myung', serif`;
-                            ctx.fillText(stamp.jong, 0, 0);
-                            ctx.restore();
-                        }
-                    } else {
-                        ctx.fillText(stamp.char, 0, 0);
-                    }
+                    
+                    // Stamp combined character perfectly!
+                    ctx.fillText(cell.char, 0, 0);
+                    ctx.restore();
                 }
-                ctx.restore();
-            });
+            }
         }
 
-        // --- TYPEWRITER SYSTEM CONTROLS ---
+        // --- 8. TYPEWRITER ACTION DISPATCHERS ---
 
         function updateCarriage() {
             const targetX = -carriageX * charWidth;
@@ -844,7 +893,7 @@
             void typebar.offsetWidth;
             typebar.classList.add('typebar-striking');
 
-            // Rotate spool wheels organically
+            // Rotate ribbon wheels organically
             const deg = ribbonColor === 'red' ? 10 : -10;
             const currentL = parseInt(spoolL.style.transform.replace(/[^\d-]/g, '')) || 0;
             const currentR = parseInt(spoolR.style.transform.replace(/[^\d-]/g, '')) || 0;
@@ -855,9 +904,9 @@
         function updateJam(elapsed) {
             if (isJammed) return;
 
-            if (elapsed < 150) {
+            if (elapsed < 140) {
                 jamLevel += 35;
-            } else if (elapsed < 230) {
+            } else if (elapsed < 220) {
                 jamLevel += 12;
             } else {
                 jamLevel = Math.max(0, jamLevel - 15);
@@ -868,7 +917,7 @@
                 isJammed = true;
                 jamAlert.classList.remove('hidden');
                 playMetalStrike();
-                showToast("너무 급하게 타이핑하여 활판이 엉켰습니다! 정돈 레버를 눌러주세요.", "⚠️");
+                showToast("너무 급하게 인쇄해 활판이 꼬였습니다! 정돈을 눌러주세요.", "⚠️");
             }
 
             jamBar.style.width = `${jamLevel}%`;
@@ -888,21 +937,58 @@
             jamBar.style.width = '0%';
             jamAlert.classList.add('hidden');
             playTypewriterClack(false);
-            showToast("활판 메커니즘을 매끄럽게 정돈했습니다.", "⚙️");
+            showToast("활판 메커니즘을 말끔하게 정돈했습니다.", "⚙️");
         }
 
         function toggleBatchim() {
             isBatchimActive = !isBatchimActive;
-            batchimStatus.textContent = isBatchimActive ? '받침용 입력 활성' : '해제';
+            batchimStatus.textContent = isBatchimActive ? '받침 입력 활성' : '해제';
             batchimStatus.className = isBatchimActive ? 'text-emerald-400 font-bold' : 'text-red-500';
             playTypewriterClack(true);
         }
 
-        // Core Typist Stamp Router
-        function processStamp(char) {
+        // Set cell value on grid canvas
+        function updateCurrentCell() {
+            if (!isPaperLoaded) return;
+            const combinedChar = makeSyllable(cho, jung, jong);
+            
+            if (!documentLines[currentLineY]) {
+                documentLines[currentLineY] = [];
+            }
+            
+            documentLines[currentLineY][carriageX] = {
+                char: combinedChar,
+                cho: cho,
+                jung: jung,
+                jong: jong,
+                color: ribbonColor,
+                offsetX: (Math.random() - 0.5) * 1.5,
+                offsetY: (Math.random() - 0.5) * 1.2,
+                angle: (Math.random() - 0.5) * 0.04,
+                opacity: 0.85 + Math.random() * 0.15,
+                scale: 0.95 + Math.random() * 0.1
+            };
+            
+            updateCarriage();
+            drawPaper();
+        }
+
+        // Commit active syllable buffer and step carriage
+        function commitSyllable() {
+            if (cho || jung || jong) {
+                carriageX++;
+                cho = '';
+                jung = '';
+                jong = '';
+                updateCarriage();
+            }
+        }
+
+        // Core Typist Stateful Hangul Automaton Entry
+        function inputJamo(jamo) {
             if (!isPaperLoaded) {
                 playMetalStrike();
-                showToast("먼저 새 종이를 급지해 주세요!", "📄");
+                showToast("먼저 새 종이를 장착해 주세요!", "📄");
                 return;
             }
             if (isJammed) {
@@ -910,7 +996,7 @@
                 return;
             }
 
-            // Jam check
+            // Jam metric
             const now = Date.now();
             if (lastKeyPressTime > 0) {
                 updateJam(now - lastKeyPressTime);
@@ -920,44 +1006,237 @@
             if (carriageX >= maxCarriageX) {
                 playBellRing();
                 playMetalStrike();
-                showToast("행의 끝에 도달했습니다. 줄 바꿈 레버를 당겨주세요!", "🔔");
+                showToast("종이 한 행의 끝입니다. 다음 줄로 넘어가세요!", "🔔");
                 return;
             }
 
-            // Formulate stamp elements
-            const decomposed = decomposeSyllable(char);
-            let stampObj = null;
+            const isConsonant = CONSONANTS.has(jamo);
+            const isVowel = VOWELS.has(jamo);
 
-            if (decomposed.length > 1) {
-                stampObj = new Stamp(char, decomposed[0], decomposed[1], decomposed[2], carriageX, currentLineY, ribbonColor, false);
-            } else {
-                if (isBatchimActive && "ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㄲㅆ".includes(char)) {
-                    stampObj = new Stamp(char, '', '', char, carriageX, currentLineY, ribbonColor, false);
-                } else {
-                    stampObj = new Stamp(char, '', '', '', carriageX, currentLineY, ribbonColor, false);
+            if (!isConsonant && !isVowel) {
+                // Non-Hangul stamp (Numbers, Symbols)
+                commitSyllable();
+                processDirectStamp(jamo);
+                return;
+            }
+
+            if (isConsonant) {
+                // Scenario 1: Empty
+                if (!cho && !jung) {
+                    cho = jamo;
+                    updateCurrentCell();
+                    triggerStrike();
+                    playTypewriterClack(false);
+                }
+                // Scenario 2: Cho only
+                else if (cho && !jung) {
+                    commitSyllable();
+                    cho = jamo;
+                    updateCurrentCell();
+                    triggerStrike();
+                    playTypewriterClack(false);
+                }
+                // Scenario 3: Cho + Jung
+                else if (cho && jung && !jong) {
+                    if (JONG_MAP[jamo] !== undefined) {
+                        jong = jamo;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    } else {
+                        commitSyllable();
+                        cho = jamo;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    }
+                }
+                // Scenario 4: Cho + Jung + Jong
+                else if (cho && jung && jong) {
+                    const combinedJong = COMPLEX_JONG[jong + jamo];
+                    if (combinedJong) {
+                        jong = combinedJong;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    } else {
+                        commitSyllable();
+                        cho = jamo;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    }
+                }
+            }
+            else if (isVowel) {
+                // Scenario 1: Empty
+                if (!cho && !jung) {
+                    jung = jamo;
+                    updateCurrentCell();
+                    triggerStrike();
+                    playTypewriterClack(false);
+                }
+                // Scenario 2: Cho only
+                else if (cho && !jung) {
+                    jung = jamo;
+                    updateCurrentCell();
+                    triggerStrike();
+                    playTypewriterClack(false);
+                }
+                // Scenario 3: Cho + Jung
+                else if (cho && jung && !jong) {
+                    const combinedJung = COMPLEX_JUNG[jung + jamo];
+                    if (combinedJung) {
+                        jung = combinedJung;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    } else {
+                        commitSyllable();
+                        jung = jamo;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    }
+                }
+                // Scenario 4: Cho + Jung + Jong (Re-association case: '간' + '아' = '가', '나')
+                else if (cho && jung && jong) {
+                    if (SPLIT_JONG[jong]) {
+                        const parts = SPLIT_JONG[jong];
+                        const oldJong = parts[0];
+                        const newCho = parts[1];
+                        
+                        jong = oldJong;
+                        updateCurrentCell();
+                        
+                        commitSyllable();
+                        cho = newCho;
+                        jung = jamo;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    } else {
+                        const newCho = jong;
+                        jong = '';
+                        updateCurrentCell();
+                        
+                        commitSyllable();
+                        cho = newCho;
+                        jung = jamo;
+                        updateCurrentCell();
+                        triggerStrike();
+                        playTypewriterClack(false);
+                    }
                 }
             }
 
-            stamps.push(stampObj);
-            carriageX++;
-            updateCarriage();
-            triggerStrike();
-            playTypewriterClack(false);
-            drawPaper();
-
-            // Ring bell before line boundary
             if (carriageX === maxCarriageX - 5) {
                 playBellRing();
             }
         }
 
-        function moveBack() {
-            if (carriageX > 0) {
-                carriageX--;
-                updateCarriage();
-                playTypewriterClack(true);
-            } else {
+        // Direct non-combinatorial stamp helper
+        function processDirectStamp(char) {
+            commitSyllable();
+            
+            if (!documentLines[currentLineY]) {
+                documentLines[currentLineY] = [];
+            }
+            
+            documentLines[currentLineY][carriageX] = {
+                char: char,
+                cho: '',
+                jung: '',
+                jong: '',
+                color: ribbonColor,
+                offsetX: (Math.random() - 0.5) * 1.5,
+                offsetY: (Math.random() - 0.5) * 1.2,
+                angle: (Math.random() - 0.5) * 0.04,
+                opacity: 0.85 + Math.random() * 0.15,
+                scale: 0.95 + Math.random() * 0.1
+            };
+            
+            carriageX++;
+            updateCarriage();
+            triggerStrike();
+            playTypewriterClack(false);
+            drawPaper();
+        }
+
+        // 1980s PEELING ADHESIVE LIFT-OFF AUTOMATIC DELETION
+        function moveBackAndErase() {
+            if (!isPaperLoaded) {
                 playMetalStrike();
+                return;
+            }
+
+            // Case A: Active composition is present at cursor
+            if (cho || jung || jong) {
+                if (jong) {
+                    const split = SPLIT_JONG[jong];
+                    if (split) {
+                        jong = split[0];
+                    } else {
+                        jong = '';
+                    }
+                    updateCurrentCell();
+                    playCorrectionLiftSound();
+                    triggerStrike();
+                } else if (jung) {
+                    let reverted = false;
+                    for (let key in COMPLEX_JUNG) {
+                        if (COMPLEX_JUNG[key] === jung) {
+                            jung = key[0];
+                            reverted = true;
+                            break;
+                        }
+                    }
+                    if (!reverted) {
+                        jung = '';
+                    }
+                    if (cho || jung) {
+                        updateCurrentCell();
+                    } else {
+                        if (documentLines[currentLineY]) {
+                            delete documentLines[currentLineY][carriageX];
+                        }
+                        drawPaper();
+                    }
+                    playCorrectionLiftSound();
+                    triggerStrike();
+                } else if (cho) {
+                    cho = '';
+                    if (documentLines[currentLineY]) {
+                        delete documentLines[currentLineY][carriageX];
+                    }
+                    playCorrectionLiftSound();
+                    triggerStrike();
+                    drawPaper();
+                }
+            }
+            // Case B: Step carriage back and peel off printed cell
+            else {
+                if (carriageX > 0) {
+                    carriageX--;
+                    updateCarriage();
+
+                    if (documentLines[currentLineY] && documentLines[currentLineY][carriageX]) {
+                        const cell = documentLines[currentLineY][carriageX];
+                        if (cell && cell.char) {
+                            // Perfect Lift-off: delete cell entirely
+                            delete documentLines[currentLineY][carriageX];
+                            playCorrectionLiftSound();
+                            triggerStrike();
+                            drawPaper();
+                        } else {
+                            playTypewriterClack(true);
+                        }
+                    } else {
+                        playTypewriterClack(true);
+                    }
+                } else {
+                    playMetalStrike();
+                }
             }
         }
 
@@ -967,6 +1246,7 @@
                 return;
             }
 
+            commitSyllable();
             playReturnSlide();
 
             const lever = document.getElementById('return-lever');
@@ -984,19 +1264,7 @@
             paperContainer.style.transform = `translateY(${paperScrollY}px)`;
         }
 
-        function applyWhiteout() {
-            if (!isPaperLoaded || isJammed) {
-                playMetalStrike();
-                return;
-            }
-            stamps.push(new Stamp('', '', '', '', carriageX, currentLineY, ribbonColor, true));
-            triggerStrike();
-            playTypewriterClack(true);
-            drawPaper();
-            showToast("오타 위치에 아날로그 수정액을 바릅니다.", "💧");
-        }
-
-        // --- PAPER HANDLERS ---
+        // --- 9. PAPER CONFIGURATION HANDLERS ---
         function loadPaper() {
             if (isPaperLoaded) return;
             playPaperScroll();
@@ -1004,24 +1272,26 @@
             paperScrollY = 120;
             carriageX = 0;
             currentLineY = 0;
-            stamps = [];
+            documentLines = [];
+            cho = ''; jung = ''; jong = '';
 
             paperContainer.style.transform = `translateY(${paperScrollY}px)`;
             paperContainer.style.opacity = '1';
             paperAlert.classList.add('opacity-0');
 
             setTimeout(() => drawPaper(), 100);
-            showToast("종이를 실린더 롤러에 성공적으로 밀어 넣었습니다.", "📄");
+            showToast("종이를 롤러 기어에 장착했습니다.", "📄");
         }
 
         function ripPaper() {
             if (!isPaperLoaded) return;
+            commitSyllable();
             playPaperRip();
 
             const dataUrl = canvas.toDataURL("image/png");
             document.getElementById('rip-image-preview').src = dataUrl;
             document.getElementById('download-link').href = dataUrl;
-            document.getElementById('download-link').download = `1970s_민트_타자기_기록_${new Date().toISOString().slice(0,10)}.png`;
+            document.getElementById('download-link').download = `1980s_민트_타자기_기록_${new Date().toISOString().slice(0,10)}.png`;
 
             document.getElementById('modal-rip').classList.remove('hidden');
 
@@ -1032,7 +1302,7 @@
             drawPaper();
         }
 
-        // --- KEYBOARD SYSTEM INPUT HOOKS (Desktop Only) ---
+        // --- 10. SYSTEM KEYBOARD HOOKS (Desktop Only) ---
         if (!isMobileDevice && hiddenInput) {
             hiddenInput.addEventListener('input', (e) => {
                 const val = e.target.value;
@@ -1040,6 +1310,7 @@
                     const char = val.charAt(val.length - 1);
                     if (char === ' ') {
                         if (isPaperLoaded && !isJammed && carriageX < maxCarriageX) {
+                            commitSyllable();
                             carriageX++;
                             updateCarriage();
                             playTypewriterClack(true);
@@ -1049,7 +1320,8 @@
                     } else if (char === '\n') {
                         performReturn();
                     } else {
-                        processStamp(char);
+                        // Forward key to composer
+                        inputJamo(char);
                     }
                 }
                 hiddenInput.value = '';
@@ -1067,15 +1339,21 @@
 
                 if (e.key === 'Shift') {
                     isBatchimActive = true;
-                    batchimStatus.textContent = '받침용 입력 활성';
+                    batchimStatus.textContent = '받침 입력 활성';
                     batchimStatus.className = 'text-emerald-400 font-bold';
                 }
 
-                // Keycap visual push animation
-                let normalKey = e.key.toLowerCase();
+                // Fallback mapper for physical keyboard
+                let kChar = e.key;
+                if (/^[a-zA-Z,.;/1234567890-]$/.test(kChar)) {
+                    const mapped = isBatchimActive ? QWERTY_TO_KOR_SHIFT[kChar.toLowerCase()] : QWERTY_TO_KOR[kChar.toLowerCase()];
+                    if (mapped) kChar = mapped;
+                }
+
+                // Push visual feedback
                 const keys = document.querySelectorAll('.vintage-key');
                 keys.forEach(k => {
-                    if (k.dataset.char === normalKey || k.dataset.shift === normalKey || k.dataset.char === e.key) {
+                    if (k.dataset.char === kChar.toLowerCase() || k.dataset.shift === kChar.toLowerCase() || k.dataset.char === e.key) {
                         k.classList.add('pressed');
                         setTimeout(() => k.classList.remove('pressed'), 100);
                     }
@@ -1083,7 +1361,7 @@
 
                 if (e.key === 'Backspace') {
                     e.preventDefault();
-                    moveBack();
+                    moveBackAndErase();
                 } else if (e.key === 'Enter') {
                     e.preventDefault();
                     performReturn();
@@ -1101,7 +1379,7 @@
             });
         }
 
-        // --- RENDER DYNAMIC VINTAGE KEYBOARD ---
+        // --- 11. KEYBOARD DRAW SYSTEM ---
         function renderKeyboard() {
             const container = document.getElementById('virtual-keyboard');
             container.innerHTML = '';
@@ -1140,23 +1418,23 @@
                         `;
                     }
 
-                    // Pointerdown event works instantly on both mouse and touch without delay
+                    // Pointerdown works instantly on both desktop and mobile
                     keyBtn.addEventListener('pointerdown', (e) => {
                         e.preventDefault();
                         if (!isMobileDevice && hiddenInput) {
                             hiddenInput.focus();
                         }
                         
-                        // Push effect
                         keyBtn.classList.add('pressed');
                         setTimeout(() => keyBtn.classList.remove('pressed'), 100);
 
                         if (key.primary === '받침') {
                             toggleBatchim();
                         } else if (key.primary === '⟵') {
-                            moveBack();
+                            moveBackAndErase();
                         } else if (key.primary === 'TAB') {
                             if (isPaperLoaded && !isJammed && carriageX < maxCarriageX - 4) {
+                                commitSyllable();
                                 carriageX += 4;
                                 updateCarriage();
                                 playTypewriterClack(true);
@@ -1167,7 +1445,7 @@
                             playTypewriterClack(true);
                         } else {
                             const actualChar = isBatchimActive ? key.shift : key.primary;
-                            processStamp(actualChar);
+                            inputJamo(actualChar);
                         }
                     });
 
@@ -1176,7 +1454,7 @@
                 container.appendChild(rowEl);
             });
 
-            // Bottom Spacebar Row
+            // Spacebar structure
             const spaceRow = document.createElement('div');
             spaceRow.className = "flex justify-center gap-2 mt-1";
 
@@ -1192,6 +1470,7 @@
                 setTimeout(() => spaceBtn.classList.remove('pressed'), 100);
 
                 if (isPaperLoaded && !isJammed && carriageX < maxCarriageX) {
+                    commitSyllable();
                     carriageX++;
                     updateCarriage();
                     playTypewriterClack(true);
@@ -1213,6 +1492,7 @@
                 setTimeout(() => repeatBtn.classList.remove('pressed'), 100);
 
                 if (isPaperLoaded && !isJammed && carriageX < maxCarriageX - 2) {
+                    commitSyllable();
                     carriageX += 2;
                     updateCarriage();
                     playTypewriterClack(true);
@@ -1226,13 +1506,12 @@
             container.appendChild(spaceRow);
         }
 
-        // --- INTELLIGENT MOBILE AUTO-SCALER ---
-        // Dynamically scales the desktop typewriter interface to perfectly fit smartphone screens
+        // --- 12. MOBILE VIEWPORT AUTO-SCALER ---
         function adjustLayoutScaling() {
             const wrapper = document.getElementById('typewriter-scale-wrapper');
             const chassis = document.getElementById('typewriter-chassis');
             const windowWidth = window.innerWidth;
-            const targetWidth = 896; // Original desktop width
+            const targetWidth = 896; 
 
             if (windowWidth < targetWidth + 32) {
                 const scale = (windowWidth - 24) / targetWidth;
@@ -1246,7 +1525,7 @@
 
         window.addEventListener('resize', adjustLayoutScaling);
 
-        // --- ATTACH NOB AND SCROLL TRIGGERS ---
+        // --- 13. KNOB & DIAL DRAGGERS ---
         paperContainer.addEventListener('wheel', (e) => {
             e.preventDefault();
             if (!isPaperLoaded) return;
@@ -1292,16 +1571,14 @@
             knob.addEventListener('touchstart', startDrag, { passive: false });
         });
 
-        // --- BUTTON BINDINGS ---
+        // --- 14. COMPONENT MOUNTS ---
         document.getElementById('btn-load-paper').addEventListener('click', loadPaper);
         document.getElementById('btn-rip-paper').addEventListener('click', ripPaper);
         document.getElementById('btn-unjam').addEventListener('click', forceUnjam);
         document.getElementById('return-lever').addEventListener('click', performReturn);
-        document.getElementById('btn-correction').addEventListener('click', applyWhiteout);
-        document.getElementById('btn-backspace').addEventListener('click', moveBack);
+        document.getElementById('btn-backspace').addEventListener('click', moveBackAndErase);
         document.getElementById('btn-latch-batchim').addEventListener('click', toggleBatchim);
 
-        // Sound configuration
         const soundBtn = document.getElementById('btn-sound-toggle');
         soundBtn.addEventListener('click', () => {
             isSoundEnabled = !isSoundEnabled;
@@ -1311,7 +1588,6 @@
                 : "px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-400 rounded border border-stone-700 text-sm transition font-sans";
         });
 
-        // Ribbon Selector
         const rBlack = document.getElementById('ribbon-black');
         const rRed = document.getElementById('ribbon-red');
         rBlack.addEventListener('click', () => {
@@ -1320,7 +1596,7 @@
             rRed.className = "w-6 h-6 rounded-full bg-red-700 border border-stone-700 cursor-pointer transition hover:scale-110";
             ribbonStrip.style.backgroundColor = '#1c1c1c';
             playTypewriterClack(true);
-            showToast("검은색 인크 리본으로 변경했습니다.", "🖤");
+            showToast("검은색 잉크 리본으로 변경했습니다.", "🖤");
         });
         rRed.addEventListener('click', () => {
             ribbonColor = 'red';
@@ -1328,10 +1604,9 @@
             rBlack.className = "w-6 h-6 rounded-full bg-stone-900 border border-stone-700 cursor-pointer transition hover:scale-110";
             ribbonStrip.style.backgroundColor = '#7a1414';
             playTypewriterClack(true);
-            showToast("빨간색 인크 리본으로 변경했습니다.", "❤️");
+            showToast("빨간색 잉크 리본으로 변경했습니다.", "❤️");
         });
 
-        // Modal triggers
         document.getElementById('btn-manual').addEventListener('click', () => {
             document.getElementById('modal-manual').classList.remove('hidden');
         });
@@ -1342,25 +1617,24 @@
             document.getElementById('modal-rip').classList.add('hidden');
         });
 
-        // Export/Copy Document
+        // Copy plain text content
         document.getElementById('btn-copy-text').addEventListener('click', () => {
-            if (stamps.length === 0) {
-                showToast("복사할 내용이 비어 있습니다.", "⚠️");
+            let combinedText = [];
+            for (let y = 0; y < documentLines.length; y++) {
+                const line = documentLines[y];
+                if (!line) continue;
+                let lineStr = [];
+                for (let x = 0; x < line.length; x++) {
+                    lineStr[x] = (line[x] && line[x].char) ? line[x].char : ' ';
+                }
+                combinedText.push(lineStr.join(''));
+            }
+            const finalStr = combinedText.join('\n');
+
+            if (!finalStr.trim()) {
+                showToast("복사할 텍스트 본문이 비어 있습니다.", "⚠️");
                 return;
             }
-            let textLines = [];
-            stamps.forEach(stamp => {
-                if (stamp.isCorrection) return;
-                if (!textLines[stamp.gridY]) textLines[stamp.gridY] = [];
-                textLines[stamp.gridY][stamp.gridX] = stamp.char;
-            });
-            let finalStr = textLines.map(line => {
-                if (!line) return "";
-                for (let i = 0; i < line.length; i++) {
-                    if (!line[i]) line[i] = " ";
-                }
-                return line.join("");
-            }).join("\n");
 
             const dummy = document.createElement("textarea");
             document.body.appendChild(dummy);
@@ -1369,10 +1643,10 @@
             document.execCommand("copy");
             document.body.removeChild(dummy);
 
-            showToast("클립보드에 작성된 전체 본문을 복사했습니다!", "📋");
+            showToast("전체 문장을 클립보드에 완벽히 복사했습니다!", "📋");
         });
 
-        // Click redirection for focusing hidden input (Desktop only)
+        // Click focus binder (Desktop only)
         document.querySelector('main').addEventListener('click', (e) => {
             if (!isMobileDevice && hiddenInput) {
                 if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A' && !e.target.closest('#modal-rip') && !e.target.closest('#modal-manual')) {
@@ -1381,7 +1655,7 @@
             }
         });
 
-        // --- DECAY JAM ASYNC ---
+        // Asynchronous cooling jam metric
         setInterval(() => {
             if (jamLevel > 0 && !isJammed) {
                 jamLevel = Math.max(0, jamLevel - 6);
